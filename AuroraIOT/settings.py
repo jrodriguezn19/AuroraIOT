@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 # API keys and Passwords for configuration
-import credentials
+from . import credentials
 
 from pathlib import Path
 
