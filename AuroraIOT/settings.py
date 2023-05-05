@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'sensors'
+    'sensors',
+    'mqttclient'
 ]
 
 MIDDLEWARE = [
@@ -109,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Bogota'
 
 USE_I18N = True
 
@@ -125,3 +126,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# MQTT Config
+MQTT_SERVER = 'raspberry'
+MQTT_PORT = 1883
+MQTT_KEEPALIVE = 60
+MQTT_USER = 'djangoclient'
+MQTT_PASSWORD = '0000'

@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 djangorestframework = "*"
+paho-mqtt = "*"
 
 [dev-packages]
 
