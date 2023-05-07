@@ -5,7 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from .models import *
-
+from mqttclient.models import Data
 # Create your views here.
 @api_view()
 def sensors_list(request):
@@ -18,7 +18,12 @@ def homepage(request):
     # print(sensors.query)
     # print("\n")
 
-    data = Data.objects.values("sensor_id__name","sensor_id__brand", "sensor_id__type__type", "sensor_id__location", "data")
+    data = Data.objects.values("sensor_id",
+                               "sensor_id__name",
+                               "sensor_id__brand", 
+                               "sensor_id__type__type", 
+                               "sensor_id__location", 
+                               "data")
     print(data)
     print(data.query)
     context = {"data":list(data)}

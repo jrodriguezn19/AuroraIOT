@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Sensor_Type(models.Model):
     """Type of sensing variable (Temperature, Humidity, etc)"""
     type = models.CharField(max_length=255, unique=True)
@@ -16,13 +17,7 @@ class Sensor(models.Model):
     brand = models.CharField(max_length=255)
     type = models.ForeignKey(Sensor_Type, on_delete=models.PROTECT)
     location = models.CharField(max_length=255)
-    sensor_configuration = models.OneToOneField(Sensor_Configuration, on_delete=models.CASCADE)
-
-
-class Data(models.Model):
-    time = models.DateTimeField(auto_now_add=True, null=False)
-    sensor_id = models.ForeignKey(Sensor, on_delete=models.PROTECT)
-    data = models.JSONField(null=True)
+    sensor_configuration = models.ForeignKey(Sensor_Configuration, null=True, on_delete=models.SET_NULL)
 
 
 

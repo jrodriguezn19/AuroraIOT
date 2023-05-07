@@ -1,6 +1,7 @@
 import paho.mqtt.client as mqtt
 from django.conf import settings
-
+from .models import Data, Sensor
+import json
 
 def on_connect(mqtt_client, userdata, flags, rc):
     print("Connected with result code " + str(rc))
@@ -20,9 +21,10 @@ def on_disconnect(mqtt_client, userdata, rc):
 
 
 def on_message(mqtt_client, userdata, msg):
-    print(f'Topic: {msg.topic} \n Payload: {msg.payload}')
-    print("\n")
-
+    string_payload = msg.payload.decode('utf8').replace("'", '"')
+    json_payload = json.loads(string_payload)
+    Data.objects.create(sensor_id=Sensor(id=json_payload["sensor_id"]), data=json_payload["data"])
+    print(f'Topic: {msg.topic} \n Payload: {json_payload}\n')
 
 client = mqtt.Client(client_id="django-mqttclient")
 client.on_connect = on_connect

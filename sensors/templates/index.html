@@ -11,6 +11,7 @@
     <h1>Homepage Aurora IOT</h1>
     <table>
       <tr bgcolor="grey">
+        <th>Sensor id</th>
         <th>Sensor</th>
         <th>Brand</th>
         <th>Sensor Type</th>
@@ -23,6 +24,7 @@
       </tr>
         {%for data in data%}
         <tr bgcolor="lightgrey">
+            <td>{{data.sensor_id}}</td>
             <td>{{data.sensor_id__name}}</td>
             <td>{{data.sensor_id__brand}}</td>
             <td>{{data.sensor_id__type__type}}</td>

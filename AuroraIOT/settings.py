@@ -79,12 +79,15 @@ WSGI_APPLICATION = 'AuroraIOT.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "auroraiotdb",
+        "USER": credentials.DB_USERNAME,
+        "PASSWORD": credentials.DB_PASSWORD,
+        "HOST": credentials.DB_HOST,
+        "PORT": credentials.DB_PORT
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -129,8 +132,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # MQTT Config
-MQTT_SERVER = 'raspberry'
-MQTT_PORT = 1883
-MQTT_KEEPALIVE = 60
-MQTT_USER = 'djangoclient'
-MQTT_PASSWORD = '0000'
+MQTT_SERVER = credentials.MQTT_SERVER
+MQTT_PORT = credentials.MQTT_PORT
+MQTT_KEEPALIVE = credentials.MQTT_KEEPALIVE
+MQTT_USER = credentials.MQTT_USER
+MQTT_PASSWORD = credentials.MQTT_PASSWORD
