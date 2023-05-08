@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'sensors'
+    'sensors',
+    'mqttclient'
 ]
 
 MIDDLEWARE = [
@@ -78,12 +79,15 @@ WSGI_APPLICATION = 'AuroraIOT.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": "auroraiotdb",
+        "USER": credentials.DB_USERNAME,
+        "PASSWORD": credentials.DB_PASSWORD,
+        "HOST": credentials.DB_HOST,
+        "PORT": credentials.DB_PORT
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -109,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Bogota'
 
 USE_I18N = True
 
@@ -125,3 +129,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# MQTT Config
+MQTT_SERVER = credentials.MQTT_SERVER
+MQTT_PORT = credentials.MQTT_PORT
+MQTT_KEEPALIVE = credentials.MQTT_KEEPALIVE
+MQTT_USER = credentials.MQTT_USER
+MQTT_PASSWORD = credentials.MQTT_PASSWORD

@@ -3,5 +3,6 @@ from . import views
 
 # URLConf
 urlpatterns = [
-    path('sensor', views.sensors_list)
+    path('', views.homepage),
+    path('sensors_list/', views.sensors_list)
 ]
