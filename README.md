@@ -1,4 +1,4 @@
 # AuroraIOT
-App built in Python and React for IOT monitoring
+App built in Python - Django and React for IOT monitoring
 
 #Under development
