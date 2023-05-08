@@ -1,2 +1,3 @@
 # AuroraIOT
-Backend in Django for IOT monitoring
+App built in Python and React for IOT monitoring
+*Under development
