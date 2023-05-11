@@ -7,6 +7,8 @@ name = "pypi"
 djangorestframework = "*"
 paho-mqtt = "*"
 psycopg2 = "*"
+python-dotenv = "*"
+python-decouple = "*"
 
 [dev-packages]
 

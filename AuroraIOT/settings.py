@@ -9,8 +9,9 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-# API keys and Passwords for configuration
-from . import credentials
+# Load .env file into config object for private keys and passwords
+from decouple import config
+
 
 from pathlib import Path
 
@@ -22,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = credentials.SECRET_KEY
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -82,10 +83,10 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "auroraiotdb",
-        "USER": credentials.DB_USERNAME,
-        "PASSWORD": credentials.DB_PASSWORD,
-        "HOST": credentials.DB_HOST,
-        "PORT": credentials.DB_PORT
+        "USER": config('DB_USERNAME'),
+        "PASSWORD": config('DB_PASSWORD'),
+        "HOST": config('DB_HOST'),
+        "PORT": config('DB_PORT'),
     }
 }
 
@@ -132,8 +133,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # MQTT Config
-MQTT_SERVER = credentials.MQTT_SERVER
-MQTT_PORT = credentials.MQTT_PORT
-MQTT_KEEPALIVE = credentials.MQTT_KEEPALIVE
-MQTT_USER = credentials.MQTT_USER
-MQTT_PASSWORD = credentials.MQTT_PASSWORD
+MQTT_SERVER = config('MQTT_SERVER')
+MQTT_PORT = config('MQTT_PORT')
+MQTT_KEEPALIVE = config('MQTT_KEEPALIVE')
+MQTT_USER = config('MQTT_USER')
+MQTT_PASSWORD = config('MQTT_PASSWORD')
+
