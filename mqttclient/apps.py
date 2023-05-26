@@ -1,4 +1,5 @@
 from django.apps import AppConfig
+from AuroraIOT.settings import MQTT_ACTIVE
 
 
 class MqttclientConfig(AppConfig):
@@ -7,4 +8,5 @@ class MqttclientConfig(AppConfig):
 
     def ready(self):
         from mqttclient import mqtt      
-        mqtt.client.loop_start()
+        if MQTT_ACTIVE:
+            mqtt.client.loop_start()

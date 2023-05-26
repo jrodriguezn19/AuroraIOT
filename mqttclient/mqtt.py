@@ -1,8 +1,8 @@
 import paho.mqtt.client as mqtt
-from .models import Data, Sensor
+from sensors.models import Data, Sensor
 import json
 from decouple import config
-
+from AuroraIOT.settings import MQTT_ACTIVE
 
 def on_connect(mqtt_client, userdata, flags, rc):
     print("Connected with result code " + str(rc))
@@ -29,9 +29,11 @@ def on_message(mqtt_client, userdata, msg):
 
 
 client = mqtt.Client(client_id="django-mqttclient")
-client.on_connect = on_connect
-client.on_message = on_message
-client.on_disconnect = on_disconnect
-client.username_pw_set(config('MQTT_USER'), config('MQTT_PASSWORD'))
-client.connect(host=config('MQTT_SERVER'), port=config('MQTT_PORT', cast=int), keepalive=config('MQTT_KEEPALIVE', cast=int))
+if MQTT_ACTIVE:
+    client.on_connect = on_connect
+    client.on_message = on_message
+    client.on_disconnect = on_disconnect
+    client.username_pw_set(config('MQTT_USER'), config('MQTT_PASSWORD'))
+    client.connect(host=config('MQTT_SERVER'), port=config('MQTT_PORT', cast=int), keepalive=config('MQTT_KEEPALIVE', cast=int))
+
 

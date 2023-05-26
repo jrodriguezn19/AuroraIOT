@@ -1,15 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-
 from .models import *
-from mqttclient.models import Data
-# Create your views here.
-@api_view()
-def sensors_list(request):
-    return Response('OK!!!')
+from sensors.models import Data
+
 
 def homepage(request):
     # sensors = Sensor.objects.values("name", "brand", "location", "type__type")

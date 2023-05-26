@@ -19,8 +19,10 @@ from django.urls import path, include
 
 
 urlpatterns = [
-    path('', include('sensors.urls')),
-    path('mqtt', include('mqttclient.urls')),
+    path('__debug__/', include('debug_toolbar.urls')),
     path('admin/', admin.site.urls),
-    path('sensors/', include('sensors.urls'))
+    path('mqtt', include('mqttclient.urls')),
+    path('sensors/', include('sensors.urls')),
+    path('api/v1/', include('api.urls')),
+    
 ]
