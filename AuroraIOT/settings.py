@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'rest_framework',
     "debug_toolbar",
     'sensors',
-    'mqttclient'
+    'mqttclient',
+    'coreapi'
 ]
 
 MIDDLEWARE = [
@@ -139,6 +140,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
     'COERCE_DECIMAL_TO_STRING':False,
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
