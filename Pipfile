@@ -10,8 +10,10 @@ psycopg2 = "*"
 psycopg2-binary = "*"
 python-dotenv = "*"
 python-decouple = "*"
+coreapi = "*"
 
 [dev-packages]
+django-debug-toolbar = "*"
 
 [requires]
 python_version = "3.10"

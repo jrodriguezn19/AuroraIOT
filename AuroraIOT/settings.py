@@ -9,11 +9,13 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-# Load .env file into config object for private keys and passwords
-from decouple import config
-
-
+# Activate or deactivate MQTT operation
 from pathlib import Path
+from decouple import config
+MQTT_ACTIVE = True
+
+# Load .env file into config object for private keys and passwords
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,8 +43,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    "debug_toolbar",
     'sensors',
-    'mqttclient'
+    'mqttclient',
+    'coreapi'
 ]
 
 MIDDLEWARE = [
@@ -53,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = 'AuroraIOT.urls'
@@ -108,6 +113,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -131,11 +139,16 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'COERCE_DECIMAL_TO_STRING':False,
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10
+}
+    
 # MQTT Config
 MQTT_SERVER = config('MQTT_SERVER')
 MQTT_PORT = config('MQTT_PORT')
 MQTT_KEEPALIVE = config('MQTT_KEEPALIVE')
 MQTT_USER = config('MQTT_USER')
 MQTT_PASSWORD = config('MQTT_PASSWORD')
-
