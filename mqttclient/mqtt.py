@@ -2,7 +2,7 @@ import paho.mqtt.client as mqtt
 from sensors.models import Data, Sensor
 import json
 from decouple import config
-from AuroraIOT.settings import MQTT_ACTIVE
+from AuroraIOT.settings.dev import MQTT_ACTIVE
 
 def on_connect(mqtt_client, userdata, flags, rc):
     print("Connected with result code " + str(rc))

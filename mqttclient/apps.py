@@ -1,5 +1,5 @@
 from django.apps import AppConfig
-from AuroraIOT.settings import MQTT_ACTIVE
+from AuroraIOT.settings.dev import MQTT_ACTIVE
 
 
 class MqttclientConfig(AppConfig):
