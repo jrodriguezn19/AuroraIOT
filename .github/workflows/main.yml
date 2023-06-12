@@ -11,5 +11,5 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag auroraiot:$(date +%s)
+        run: sudo docker build . --file Dockerfile --tag auroraiot:$(date +%s)
       
