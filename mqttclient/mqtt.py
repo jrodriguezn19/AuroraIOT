@@ -23,9 +23,12 @@ def on_disconnect(mqtt_client, userdata, rc):
 
 def on_message(mqtt_client, userdata, msg):
     string_payload = msg.payload.decode('utf8').replace("'", '"')
-    json_payload = json.loads(string_payload)
-    Data.objects.create(sensor_id=Sensor(id=json_payload["sensor_id"]), data=json_payload["data"])
-    print(f'Topic: {msg.topic} \n Payload: {json_payload}\n')
+    try:
+        json_payload = json.loads(string_payload)
+        Data.objects.create(sensor_id=Sensor(id=json_payload["sensor_id"]), data=json_payload["data"])
+        print(f'Topic: {msg.topic} \n Payload: {json_payload}\n')
+    except ValueError as err:
+        print("Json data recevied from MQTT not valid or empty - Error:", err)
 
 
 client = mqtt.Client(client_id="django-mqttclient")
