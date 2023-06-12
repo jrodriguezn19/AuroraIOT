@@ -3,7 +3,7 @@ from .models import *
 from sensors.models import Data
 
 
-def homepage(request):
+def sensors_homepage(request):
     # sensors = Sensor.objects.values("name", "brand", "location", "type__type")
     # context = {"sensors": sensors}
     # print(sensors)
@@ -19,4 +19,4 @@ def homepage(request):
     print(data)
     print(data.query)
     context = {"data":list(data)}
-    return render(request, 'index.html', context)
+    return render(request, 'sensors.html', context)

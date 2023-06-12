@@ -1,14 +1,10 @@
 import os
 from .common import *
 
+
 DEBUG = False
 
-SECRET_KEY = config('SECRET_KEY')
-
 ALLOWED_HOSTS = []
-
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
     "default": {
@@ -20,3 +16,6 @@ DATABASES = {
         "PORT": config('DB_PORT'),
     }
 }
+
+
+print("Using PROD Settings")

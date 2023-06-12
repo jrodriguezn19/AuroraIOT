@@ -11,6 +11,7 @@ psycopg2-binary = "*"
 python-dotenv = "*"
 python-decouple = "*"
 coreapi = "*"
+gunicorn = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"
