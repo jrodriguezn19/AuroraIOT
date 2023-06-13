@@ -11,6 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag auroraiot
+        run: sudo docker build . --file Dockerfile --tag auroraiot
       - name: Run AuroraIOT container 
-        run: docker run -d -p 8000:8000 auroraiot
+        run: sudo docker run -d -p 8000:8000 auroraiot
