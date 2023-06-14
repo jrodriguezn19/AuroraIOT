@@ -129,3 +129,5 @@ MQTT_PORT = config('MQTT_PORT')
 MQTT_KEEPALIVE = config('MQTT_KEEPALIVE')
 MQTT_USER = config('MQTT_USER')
 MQTT_PASSWORD = config('MQTT_PASSWORD')
+
+print("Using COMMON settings")

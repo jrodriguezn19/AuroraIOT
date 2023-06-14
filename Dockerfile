@@ -38,6 +38,7 @@ RUN pipenv install --system --dev
 # Expose port 8000 on the container
 EXPOSE 8000
 
-CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000", "--noreload"]
+#CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000", "--noreload"]
 
-#CMD ["gunicorn", "AuroraIOT.wsgi", "0.0.0.0:8000"]
+#gunicorn AuroraIOT.wsgi -b 0.0.0.0:8000 -e DJANGO_SETTINGS_MODULE=AuroraIOT.settings.prod
+CMD ["gunicorn", "AuroraIOT.wsgi", "-b", "0.0.0.0:8000", "-e", "DJANGO_SETTINGS_MODULE=AuroraIOT.settings.prod"]
