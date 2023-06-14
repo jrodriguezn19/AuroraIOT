@@ -7,7 +7,7 @@ ALLOWED_HOSTS = []
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql22222222222222",
+        "ENGINE": "django.db.backends.postgresql",
         "NAME": "auroraiotdb",
         "USER": config('DB_USERNAME'),
         "PASSWORD": config('DB_PASSWORD'),
@@ -15,5 +15,3 @@ DATABASES = {
         "PORT": config('DB_PORT'),
     }
 }
-
-print("Using DEV Settings")

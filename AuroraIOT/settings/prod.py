@@ -16,6 +16,3 @@ DATABASES = {
         "PORT": config('DB_PORT'),
     }
 }
-
-
-print("Using PROD Settings")
