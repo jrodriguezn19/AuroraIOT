@@ -10,6 +10,9 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v3
+      - name: Add .env file from repository secrets
+        run: |
+          echo "${{ secrets.ENV_FILE }}" > .env
       - name: Build the Docker image
         run: sudo docker build . --file Dockerfile --tag auroraiot
       - name: Run AuroraIOT container 
