@@ -11,3 +11,5 @@ DATABASES = {
         "NAME": "sqlite3.db",
     }
 }
+
+print("Using DEV settings")

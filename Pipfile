@@ -12,6 +12,8 @@ python-dotenv = "*"
 python-decouple = "*"
 coreapi = "*"
 gunicorn = "*"
+whitenoise = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"

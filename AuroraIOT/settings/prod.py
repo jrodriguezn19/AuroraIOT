@@ -6,6 +6,13 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": "sqlite3.db",
+#     }
+# }
+
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
@@ -23,3 +30,10 @@ def show_toolbar(request):
 DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': show_toolbar,
 }
+
+# SECURE_CROSS_ORIGIN_OPENER_POLICY = None
+
+# import mimetypes
+# mimetypes.add_type("text/css", ".css", True)
+
+print("Using PROD settings")
