@@ -3,22 +3,23 @@ from sensors.models import Data, Sensor
 import json
 from decouple import config
 from AuroraIOT.settings.dev import MQTT_ACTIVE
+import datetime;
 
 def on_connect(mqtt_client, userdata, flags, rc):
-    print("Connected with result code " + str(rc))
+    print("MQTT: Connected with result code " + str(rc))
     if rc == 0:
-        print('Connected successfully')
+        print('MQTT: Connected successfully')
         mqtt_client.subscribe('auroraiot/energy')
     else:
-        print('Bad connection. Code:', rc)
+        print('MQTT: Bad connection. Code:', rc)
 
 
 def on_disconnect(mqtt_client, userdata, rc):
     mqtt_client.loop_stop(force=False)
     if rc != 0:
-        print("Unexpected disconnection.")
+        print("MQTT: Unexpected disconnection")
     else:
-        print("Disconnected")
+        print("MQTT: Disconnected")
 
 
 def on_message(mqtt_client, userdata, msg):
@@ -26,6 +27,7 @@ def on_message(mqtt_client, userdata, msg):
     try:
         json_payload = json.loads(string_payload)
         Data.objects.create(sensor_id=Sensor(id=json_payload["sensor_id"]), data=json_payload["data"])
+        print(datetime.datetime.now())
         print(f'Topic: {msg.topic} \n Payload: {json_payload}\n')
     except ValueError as err:
         print("Json data recevied from MQTT not valid or empty - Error:", err)
