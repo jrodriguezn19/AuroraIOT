@@ -44,4 +44,4 @@ EXPOSE 9000
 RUN python3 manage.py collectstatic
 
 #gunicorn AuroraIOT.wsgi -b 0.0.0.0:8000 -e DJANGO_SETTINGS_MODULE=AuroraIOT.settings.prod
-CMD ["gunicorn", "AuroraIOT.wsgi", "-b", "0.0.0.0:8000", "-e", "DJANGO_SETTINGS_MODULE=AuroraIOT.settings.prod"]
+CMD ["gunicorn", "AuroraIOT.wsgi", "-b", "0.0.0.0:9000", "-e", "DJANGO_SETTINGS_MODULE=AuroraIOT.settings.prod"]
