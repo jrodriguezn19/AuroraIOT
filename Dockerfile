@@ -35,8 +35,8 @@ RUN pipenv install --system --dev
 
 #ENV DJANGO_SETTINGS_MODULE=AuroraIOT.settings.prod
 
-# Expose port 8000 on the container
-EXPOSE 8000
+# Expose port 9000 on the container
+EXPOSE 9000
 
 #CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000", "--noreload"]
 
