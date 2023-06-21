@@ -1,4 +1,3 @@
-import os
 from .common import *
 
 
@@ -31,9 +30,7 @@ DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': show_toolbar,
 }
 
-# SECURE_CROSS_ORIGIN_OPENER_POLICY = None
+MQTT_CLIENT_ID = "id-django-mqttclient-production"
 
-# import mimetypes
-# mimetypes.add_type("text/css", ".css", True)
 
 print("Using PROD settings")

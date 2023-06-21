@@ -3,9 +3,10 @@ from sensors.models import Data, Sensor
 import json
 from decouple import config
 from AuroraIOT.settings.dev import MQTT_ACTIVE
+import os
 import datetime
 import time
-
+from django.conf import settings
 
 #rc = returned code
 # Connection Return Codes
@@ -83,7 +84,7 @@ def on_message(mqtt_client, userdata, msg):
         print("Erroneous payload received was: ", string_payload)
 
 
-client = mqtt.Client(client_id="id-django-mqttclient")
+client = mqtt.Client(client_id = settings.MQTT_CLIENT_ID)
 if MQTT_ACTIVE:
     client.on_connect = on_connect
     client.on_message = on_message
@@ -100,7 +101,7 @@ if MQTT_ACTIVE:
         print("MQTT client.connect() failed")
         exit(1)
 
-    # not sure if this loops is good
+    # not sure if this loop is good
     # while not client.connected_flag and not client.bad_connection_flag: #wait in loop
     #     print("In wait loop")
     #     time.sleep(1)

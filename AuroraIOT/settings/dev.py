@@ -12,4 +12,6 @@ DATABASES = {
     }
 }
 
+MQTT_CLIENT_ID = "id-django-mqttclient-development"
+
 print("Using DEV settings")
