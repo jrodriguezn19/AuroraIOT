@@ -26,8 +26,8 @@ urlpatterns = [
     path('', views.homepage),
     path('mqtt/', include('mqttclient.urls')),
     path('sensors/', include('sensors.urls')),
-    path('api/v1/', include('api.urls')),
-    path('api/v1/docs/', include_docs_urls(title="AuroraIOT API v1")),
+    path('api/', include('api.urls')),
+    path('api/docs/', include_docs_urls(title="AuroraIOT API v1")),
 
 
 ]

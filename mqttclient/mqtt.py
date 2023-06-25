@@ -8,6 +8,7 @@ import datetime
 import time
 from django.conf import settings
 
+
 #rc = returned code
 # Connection Return Codes
 # 0: Connection successful

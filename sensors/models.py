@@ -25,22 +25,3 @@ class Data(models.Model):
     sensor_id = models.ForeignKey(Sensor, on_delete=models.PROTECT)
     data = models.JSONField(null=True)
 
-# '''
-# Model idea to store data in a structured way. This would require a 
-# a new data table per each sensor due to the difference in data readings structure
-# class Energy_Data(models.Model):
-#     time = models.DateTimeField(auto_now_add=True, null=False)
-#     sensor_id = models.ForeignKey(Sensor, on_delete=models.CASCADE)
-#     # V
-#     volts = models.PositiveSmallIntegerField()
-#     # A
-#     amps = models.PositiveSmallIntegerField()
-#     # Hz
-#     frequency = models.PositiveSmallIntegerField()
-#     # W
-#     watts = models.PositiveSmallIntegerField()
-#     # kWh
-#     energy = models.PositiveIntegerField
-#     # power factor (0.00 to 1.00) is multiplied by 100 to store integer values (0 to 100).
-#     power_factor = models.PositiveSmallIntegerField()
-# '''
