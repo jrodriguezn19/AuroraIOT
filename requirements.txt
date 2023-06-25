@@ -6,7 +6,9 @@ coreapi==2.3.3
 coreschema==0.0.4
 django==4.2.2 ; python_version >= '3.8'
 django-cors-headers==4.1.0
+django-filter==23.2
 djangorestframework==3.14.0
+drf-nested-routers==0.93.4
 gunicorn==20.1.0
 idna==3.4 ; python_version >= '3.5'
 itypes==1.2.0
@@ -19,9 +21,9 @@ python-decouple==3.8
 python-dotenv==1.0.0
 pytz==2023.3
 requests==2.31.0 ; python_version >= '3.7'
-setuptools==67.8.0 ; python_version >= '3.7'
+setuptools==68.0.0 ; python_version >= '3.7'
 sqlparse==0.4.4 ; python_version >= '3.5'
 typing-extensions==4.6.3 ; python_version < '3.11'
 uritemplate==4.1.1 ; python_version >= '3.6'
 urllib3==2.0.3 ; python_version >= '3.7'
-whitenoise==6.4.0
+whitenoise==6.5.0
