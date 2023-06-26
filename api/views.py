@@ -3,6 +3,7 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.viewsets import ModelViewSet
 from sensors.models import Sensor, Data
 from .serializers import SensorSerializer, DataSerializer
+from .filters import SensorDataFilter
 
 class SensorViewSet(ModelViewSet):
     queryset = Sensor.objects.all().order_by('id')
@@ -15,7 +16,7 @@ class SensorDataViewSet(ModelViewSet):
     queryset = Data.objects.all().order_by('id')
     serializer_class = DataSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter]
-    filterset_fields = ['sensor_id']
+    filterset_class = SensorDataFilter
     lookup_field = 'id' 
 
     def get_queryset(self):
