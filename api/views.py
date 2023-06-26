@@ -16,7 +16,7 @@ class SensorDataViewSet(ModelViewSet):
     serializer_class = DataSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_fields = ['sensor_id']
-    lookup_field = 'sensor_data_pk' 
+    lookup_field = 'id' 
 
     def get_queryset(self):
         sensor_pk = self.kwargs['sensor_pk']
