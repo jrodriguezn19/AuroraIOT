@@ -83,6 +83,7 @@ def on_message(mqtt_client, userdata, msg):
     except ValueError as err:
         print("Json data recevied from MQTT not valid or empty - Error:", err)
         print("Erroneous payload received was: ", string_payload)
+        print("")
 
 
 client = mqtt.Client(client_id = settings.MQTT_CLIENT_ID)
