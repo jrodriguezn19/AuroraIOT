@@ -14,7 +14,7 @@ from pathlib import Path
 from decouple import config
 
 # Activate or deactivate MQTT operation
-MQTT_ACTIVE = True
+MQTT_ACTIVE = False
 
 # Load .env file into config object for private keys and passwords
 
