@@ -1,5 +1,6 @@
 import paho.mqtt.client as mqtt
-from sensors.models import Data, Sensor
+from sensors.models import *
+from mqttclient.models import Data
 import json
 from decouple import config
 from AuroraIOT.settings.dev import MQTT_ACTIVE
@@ -8,6 +9,7 @@ import datetime
 import time
 from django.conf import settings
 
+from django.contrib.contenttypes.models import ContentType
 
 #rc = returned code
 # Connection Return Codes
@@ -76,8 +78,22 @@ def on_message(mqtt_client, userdata, msg):
     string_payload = msg.payload.decode('utf8').replace("'", '"')
     try:
         json_payload = json.loads(string_payload)
-        Data.objects.create(sensor_id=Sensor(
-            id=json_payload["sensor_id"]), data=json_payload["data"])
+        content_type = ContentType.objects.get_for_model(Sensor)
+
+        print(content_type)
+        print(type(content_type))
+        print(ContentType.objects.all())
+        #Data.objects.create(object_id=json_payload["sensor_id"])#,  data=json_payload["data"])
+        ####
+        #Data.objects.create(sensor_id=Sensor(id=json_payload["sensor_id"]), data=json_payload["data"])
+        #content_type = ContentType.objects.get_for_model(Sensor)
+        # Data.objects.filter(
+        #     content_type = content_type,
+        #     object_type = 
+        # )
+        #Data.objects.create(object_id=Sensor(id=json_payload["sensor_id"]), data=json_payload["data"])
+        
+        ######
         print(datetime.datetime.now())
         print(f'Topic: {msg.topic} \n Payload: {json_payload}\n')
     except ValueError as err:

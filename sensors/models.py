@@ -20,8 +20,5 @@ class Sensor(models.Model):
     sensor_configuration = models.ForeignKey(Sensor_Configuration, null=True, on_delete=models.SET_NULL)
 
 
-class Data(models.Model):
-    time = models.DateTimeField(auto_now_add=True, null=False)
-    sensor_id = models.ForeignKey(Sensor, on_delete=models.PROTECT)
-    data = models.JSONField(null=True)
+
 

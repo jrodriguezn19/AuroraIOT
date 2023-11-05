@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from .models import *
-from sensors.models import Data
+from mqttclient.models import Data
 
 
 def sensors_homepage(request):

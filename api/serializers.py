@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from sensors.models import Sensor, Data
+from sensors.models import Sensor
+from mqttclient.models import Data
 
 class SensorSerializer(serializers.ModelSerializer):
     class Meta:

@@ -34,13 +34,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #Third-party apps
     'django_filters',
-    "corsheaders",
+    'corsheaders',
     'rest_framework',
-    "debug_toolbar",
+    'debug_toolbar',
+    'coreapi',
+    'django_extensions',
+    #Core apps
     'sensors',
     'mqttclient',
-    'coreapi'
+    
 ]
 
 MIDDLEWARE = [
