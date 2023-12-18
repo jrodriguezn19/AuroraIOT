@@ -2,7 +2,7 @@ import json
 from django.http import JsonResponse
 from mqttclient.mqtt import client as mqtt_client
 
-
+#To send publish messages via the MQTT Broker
 def publish_message(request):
     '''Send data via MQTT to the broker'''
     request_data = json.loads(request.body)

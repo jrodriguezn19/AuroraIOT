@@ -34,17 +34,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #Third-party apps
+    # Third-party apps
     'django_filters',
     'corsheaders',
     'rest_framework',
     'debug_toolbar',
     'coreapi',
     'django_extensions',
-    #Core apps
+    # Core apps
     'sensors',
     'mqttclient',
-    
+
 ]
 
 MIDDLEWARE = [
@@ -58,7 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
+
 ]
 
 ROOT_URLCONF = 'AuroraIOT.urls'
@@ -120,12 +120,18 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'America/Bogota'
+
 
 USE_I18N = True
 
+# When support for time zones is enabled (USE_TZ = True), Django stores datetime information in UTC in the database, 
+# uses time-zone-aware datetime objects internally, and translates them to the end user’s time zone in templates and forms
+# https://docs.djangoproject.com/en/5.0/topics/i18n/timezones/
 USE_TZ = True
 
+# The time in the Database is stored in UTC, but displays it in 'America/Bogota' in Templates and Forms 
+# To store the dates in the Database in the Time Zone selected here I need to make USE_TZ = False
+TIME_ZONE = 'America/Bogota'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -140,11 +146,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
-    'COERCE_DECIMAL_TO_STRING':False,
+    'COERCE_DECIMAL_TO_STRING': False,
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
 }
-    
+
 # MQTT Config
 MQTT_SERVER = config('MQTT_SERVER')
 MQTT_PORT = config('MQTT_PORT')
