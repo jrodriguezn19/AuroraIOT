@@ -113,7 +113,6 @@ def on_message(mqtt_client, userdata, msg):
         # )
         # Data.objects.create(object_id=Sensor(id=json_payload["sensor_id"]), data=json_payload["data"])
         ######
-
     except ValueError as err:
         print("Json data recevied from MQTT not valid or empty - Error:", err)
         print("Erroneous payload received was: ", string_payload)

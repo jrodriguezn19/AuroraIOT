@@ -151,10 +151,6 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
 
-# MQTT Config
-MQTT_SERVER = config('MQTT_SERVER')
-MQTT_PORT = config('MQTT_PORT')
-MQTT_USER = config('MQTT_USER')
-MQTT_PASSWORD = config('MQTT_PASSWORD')
+
 
 print("Using COMMON settings")
