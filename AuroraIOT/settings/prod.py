@@ -5,6 +5,12 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
+# MQTT Config
+MQTT_SERVER_PROD = config('MQTT_SERVER')
+MQTT_PORT_PROD = config('MQTT_PORT')
+MQTT_USER_PROD = config('MQTT_USER')
+MQTT_PASSWORD_PROD = config('MQTT_PASSWORD')
+
 # DATABASES = {
 #     "default": {
 #         "ENGINE": "django.db.backends.sqlite3",
@@ -16,10 +22,10 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "auroraiotdb",
-        "USER": config('DB_USERNAME'),
-        "PASSWORD": config('DB_PASSWORD'),
-        "HOST": config('DB_HOST'),
-        "PORT": config('DB_PORT'),
+        "USER": config('DB_USERNAME_PROD'),
+        "PASSWORD": config('DB_PASSWORD_PROD'),
+        "HOST": config('DB_HOST_PROD'),
+        "PORT": config('DB_PORT_PROD'),
     }
 }
 

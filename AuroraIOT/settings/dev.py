@@ -5,6 +5,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# MQTT Config
+MQTT_SERVER_DEV = config('MQTT_SERVER')
+MQTT_PORT_DEV = config('MQTT_PORT')
+MQTT_USER_DEV = config('MQTT_USER')
+MQTT_PASSWORD_DEV = config('MQTT_PASSWORD')
+
 # SQLITE
 # DATABASES = {
 #     "default": {
