@@ -3,7 +3,7 @@ from sensors.models import *
 from mqttclient.models import *
 import json
 from decouple import config
-from AuroraIOT.settings.dev import MQTT_ACTIVE
+from AuroraIOT.settings.common import MQTT_ACTIVE
 # import os
 import datetime
 import time
@@ -124,16 +124,17 @@ if MQTT_ACTIVE:
     client.on_connect = on_connect
     client.on_message = on_message
     client.on_disconnect = on_disconnect
-    client.username_pw_set(config('MQTT_USER'), config('MQTT_PASSWORD'))
+    client.username_pw_set(settings.MQTT_USER, settings.MQTT_PASSWORD)
     client.connected_flag = False
     client.bad_connection_flag = False
     try:
         client.connect(
-            host=config('MQTT_SERVER'),
-            port=config('MQTT_PORT', cast=int),
+            host=settings.MQTT_SERVER,
+            # The port needs to be passed as int, not str.
+            port=int(settings.MQTT_PORT),
             keepalive=60)
     except:
-        print("MQTT client.connect() failed")
+        print("MQTT client.connect() failed to connect")
         exit(1)
 
     # not sure if this loop is good

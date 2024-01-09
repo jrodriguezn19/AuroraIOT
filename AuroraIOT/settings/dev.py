@@ -6,10 +6,11 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # MQTT Config
-MQTT_SERVER_DEV = config('MQTT_SERVER')
-MQTT_PORT_DEV = config('MQTT_PORT')
-MQTT_USER_DEV = config('MQTT_USER')
-MQTT_PASSWORD_DEV = config('MQTT_PASSWORD')
+MQTT_SERVER = config('MQTT_SERVER_DEV')
+MQTT_PORT = config('MQTT_PORT_DEV', cast=int)
+MQTT_CLIENT_ID = "id-django-mqttclient-development"
+MQTT_USER = config('MQTT_USER_DEV')
+MQTT_PASSWORD = config('MQTT_PASSWORD_DEV')
 
 # SQLITE
 # DATABASES = {
@@ -43,6 +44,6 @@ DATABASES = {
 #     }
 # }
 
-MQTT_CLIENT_ID = "id-django-mqttclient-development"
+
 
 print("Using DEV settings")

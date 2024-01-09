@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'debug_toolbar',
     'coreapi',
-    'django_extensions',
+    # 'django_extensions', App removed as it is not used
     # Core apps
     'sensors',
     'mqttclient',

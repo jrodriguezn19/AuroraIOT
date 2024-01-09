@@ -20,10 +20,8 @@ django-timescaledb = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"
-django-extensions = "*"
 pyparsing = "*"
 pydot = "*"
-pygraphviz = "*"
 
 [requires]
 python_version = "3.10"
