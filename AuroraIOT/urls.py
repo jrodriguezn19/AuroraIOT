@@ -18,16 +18,15 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.documentation import include_docs_urls
 from . import views
-
+from django.conf import settings
 
 urlpatterns = [
-    path('__debug__/', include('debug_toolbar.urls')),
     path('admin/', admin.site.urls),
     path('', views.homepage),
     path('mqtt/', include('mqttclient.urls')),
     path('sensors/', include('sensors.urls')),
     path('api/', include('api.urls')),
     path('api/docs/', include_docs_urls(title="AuroraIOT API v1")),
-
-
 ]
+if 'debug_toolbar' in settings.INSTALLED_APPS:
+    urlpatterns.append(path('__debug__/', include('debug_toolbar.urls')))
