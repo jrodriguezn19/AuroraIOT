@@ -1,5 +1,7 @@
 from .common import *
 
+print("Using MQTT_OFF settings")
+
 # Activate or deactivate MQTT operation
 MQTT_ACTIVE = False
 print(f"MQTT active status is: {MQTT_ACTIVE}")
@@ -50,4 +52,3 @@ DEBUG_TOOLBAR_CONFIG = {
 
 
 
-print("Using PROD_MQTT_OFF settings")

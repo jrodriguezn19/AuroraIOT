@@ -126,6 +126,7 @@ if settings.MQTT_ACTIVE:
     client.connected_flag = False
     client.bad_connection_flag = False
     try:
+        print(settings.MQTT_SERVER, settings.MQTT_PORT)
         client.connect(
             host=settings.MQTT_SERVER,
             # The port needs to be passed as int, not str.
@@ -133,6 +134,7 @@ if settings.MQTT_ACTIVE:
             keepalive=60)
     except:
         print("MQTT client.connect() failed to connect")
+        print(f"MQTT failed connection to broker server address: {settings.MQTT_SERVER} and port: {settings.MQTT_PORT}")
         exit(1)
 
     # not sure if this loop is good

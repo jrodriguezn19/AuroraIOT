@@ -1,5 +1,7 @@
 from .common import *
 
+print("Using PROD settings")
+
 # Activate or deactivate MQTT operation
 MQTT_ACTIVE = True
 print(f"MQTT active status is: {MQTT_ACTIVE}")
@@ -40,14 +42,9 @@ DATABASES = {
 #     }
 # }
 
-def show_toolbar(request):
-        return True
+# def show_toolbar(request):
+#         return False
 
-DEBUG_TOOLBAR_CONFIG = {
-    'SHOW_TOOLBAR_CALLBACK': show_toolbar,
-}
-
-
-
-
-print("Using PROD settings")
+# DEBUG_TOOLBAR_CONFIG = {
+#     'SHOW_TOOLBAR_CALLBACK': show_toolbar,
+# }

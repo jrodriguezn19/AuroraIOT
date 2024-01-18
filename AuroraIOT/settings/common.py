@@ -13,6 +13,7 @@ import os
 from pathlib import Path
 from decouple import config
 
+print("Using COMMON settings")
 
 # Load .env file into config object for private keys and passwords
 
@@ -35,7 +36,7 @@ INSTALLED_APPS = [
     'django_filters',
     'corsheaders',
     'rest_framework',
-    'debug_toolbar',
+    #'debug_toolbar',
     'coreapi',
     # 'django_extensions', App removed as it is not used
     # Core apps
@@ -46,7 +47,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    #'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -150,4 +151,4 @@ REST_FRAMEWORK = {
 
 
 
-#print("Using COMMON settings")
+
