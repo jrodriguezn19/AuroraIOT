@@ -13,9 +13,6 @@ import os
 from pathlib import Path
 from decouple import config
 
-# Activate or deactivate MQTT operation
-MQTT_ACTIVE = True
-print(f"MQTT active status is: {MQTT_ACTIVE}")
 
 # Load .env file into config object for private keys and passwords
 
@@ -153,4 +150,4 @@ REST_FRAMEWORK = {
 
 
 
-print("Using COMMON settings")
+#print("Using COMMON settings")

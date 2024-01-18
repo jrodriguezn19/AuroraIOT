@@ -1,5 +1,8 @@
 from .common import *
 
+# Activate or deactivate MQTT operation
+MQTT_ACTIVE = True
+print(f"MQTT active status is: {MQTT_ACTIVE}")
 
 DEBUG = False
 
