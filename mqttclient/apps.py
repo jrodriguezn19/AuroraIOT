@@ -1,6 +1,5 @@
 from django.apps import AppConfig
-from AuroraIOT.settings.dev import MQTT_ACTIVE
-
+from django.conf import settings
 
 class MqttclientConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
@@ -8,5 +7,5 @@ class MqttclientConfig(AppConfig):
 
     def ready(self):
         from mqttclient import mqtt      
-        if MQTT_ACTIVE:
+        if settings.MQTT_ACTIVE:
             mqtt.client.loop_start()

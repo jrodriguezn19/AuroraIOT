@@ -41,7 +41,9 @@ EXPOSE 9000
 #CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000", "--noreload"]
 
 #python3 manage.py collectstatic
-RUN python3 manage.py collectstatic
+RUN python3 manage.py collectstatic --noinput --settings=AuroraIOT.settings.prod_mqtt_off
+#--noinput 
+#--settings=AuroraIOT.settings.firstTime
 
 #gunicorn AuroraIOT.wsgi -b 0.0.0.0:8000 -e DJANGO_SETTINGS_MODULE=AuroraIOT.settings.prod
 CMD ["gunicorn", "AuroraIOT.wsgi", "-b", "0.0.0.0:9000", "-e", "DJANGO_SETTINGS_MODULE=AuroraIOT.settings.prod"]

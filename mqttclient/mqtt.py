@@ -3,8 +3,6 @@ from sensors.models import *
 from mqttclient.models import *
 import json
 from decouple import config
-from AuroraIOT.settings.common import MQTT_ACTIVE
-# import os
 import datetime
 import time
 from django.conf import settings
@@ -120,7 +118,7 @@ def on_message(mqtt_client, userdata, msg):
 
 
 client = mqtt.Client(client_id=settings.MQTT_CLIENT_ID)
-if MQTT_ACTIVE:
+if settings.MQTT_ACTIVE:
     client.on_connect = on_connect
     client.on_message = on_message
     client.on_disconnect = on_disconnect
