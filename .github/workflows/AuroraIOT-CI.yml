@@ -1,4 +1,4 @@
-name: AuroraIOT-Django CI
+name: AuroraIOT-CI
 
 on:
   push:
