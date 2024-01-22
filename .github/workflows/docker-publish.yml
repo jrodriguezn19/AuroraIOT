@@ -30,7 +30,7 @@ jobs:
       checks: write
   
   build:
-    needs: [integration]
+    needs: [AuroraIOT-CI]
     runs-on: ubuntu-latest
     permissions:
       contents: read
