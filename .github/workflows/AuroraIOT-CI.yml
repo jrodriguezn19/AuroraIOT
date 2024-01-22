@@ -1,4 +1,4 @@
-name: AuroraIOT-CI
+name: integration
 
 on:
   push:
