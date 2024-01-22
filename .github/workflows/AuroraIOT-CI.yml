@@ -7,9 +7,11 @@ on:
     branches: [ "master" ]
   workflow_call:
 
+permissions:
+  contents: read
+  
 jobs:
   build:
-
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
