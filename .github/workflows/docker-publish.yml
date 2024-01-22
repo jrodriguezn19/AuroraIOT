@@ -23,7 +23,7 @@ env:
 
 
 jobs:
-  integraiton:
+  integration:
     uses: ./.github/workflows/AuroraIOT-CI.yml
     permissions:
       contents: read
