@@ -41,7 +41,7 @@ EXPOSE 9000
 #CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000", "--noreload"]
 
 #python3 manage.py collectstatic
-RUN python3 manage.py collectstatic --noinput --settings=AuroraIOT.settings.prod_mqtt_off
+RUN python3 manage.py collectstatic --noinput --settings=AuroraIOT.settings.mqtt_off
 #--noinput 
 #--settings=AuroraIOT.settings.firstTime
 
