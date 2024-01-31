@@ -30,8 +30,9 @@ COPY . /app/
 
 # We use the --system flag so packages are installed into the system python
 # and not into a virtualenv. Docker containers don't need virtual environments. 
-RUN pipenv install --system --dev
 #RUN pip3 install -r requirements.txt
+#RUN pipenv install --system --dev
+RUN pipenv install --system 
 
 #ENV DJANGO_SETTINGS_MODULE=AuroraIOT.settings.prod
 
