@@ -11,11 +11,12 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
-from decouple import config
 
 print("Using COMMON settings")
 
 # Load .env file into config object for private keys and passwords
+from decouple import config
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -36,9 +37,7 @@ INSTALLED_APPS = [
     'django_filters',
     'corsheaders',
     'rest_framework',
-    #'debug_toolbar',
     'coreapi',
-    # 'django_extensions', App removed as it is not used
     # Core apps
     'sensors',
     'mqttclient',

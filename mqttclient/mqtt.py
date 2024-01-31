@@ -2,7 +2,6 @@ import paho.mqtt.client as mqtt
 from sensors.models import *
 from mqttclient.models import *
 import json
-from decouple import config
 import datetime
 import time
 from django.conf import settings

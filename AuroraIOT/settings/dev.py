@@ -9,15 +9,22 @@ print(f"MQTT active status is: {MQTT_ACTIVE}")
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
-INSTALLED_APPS.append('debug_toolbar')
-MIDDLEWARE.append('debug_toolbar.middleware.DebugToolbarMiddleware')
+# Adding Django Debug Tool bar 
+# Check if django-debug-toolbar package is installed without making the actual import of 'debug_toolbar'
+import importlib.util
+if importlib.util.find_spec('debug_toolbar'):
+    INSTALLED_APPS.append('debug_toolbar')
+    
+    '''The order of MIDDLEWARE is important. You should include the Debug Toolbar middleware as early as possible in the list. 
+    However, it must come after any other middleware that encodes the response’s content, such as GZipMiddleware.'''
+    MIDDLEWARE.insert(0,'debug_toolbar.middleware.DebugToolbarMiddleware')
+else:
+    import sys
+    sys.exit("Error: Module 'debug_toolbar' not found, please install with 'pipenv install --dev django-debug-toolbar'. Terminating application")
 
 # MQTT Config
-'''Important TO-FIX: Not sure why MQTT_SERVER_DEV and MQTT_PORT_DEV are not loading. 
-At the moment I'm using the prod variables so I don't have to connect the VPN for DEV'''
-MQTT_SERVER = config('MQTT_SERVER_PROD')
-MQTT_PORT = config('MQTT_PORT_PROD')
+MQTT_SERVER = config('MQTT_SERVER_DEV')
+MQTT_PORT = config('MQTT_PORT_DEV')
 MQTT_CLIENT_ID = "id-django-mqttclient-development"
 MQTT_USER = config('MQTT_USER_DEV')
 MQTT_PASSWORD = config('MQTT_PASSWORD_DEV')
