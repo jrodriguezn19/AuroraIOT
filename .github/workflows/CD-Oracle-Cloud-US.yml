@@ -1,4 +1,4 @@
-name: CD-Oracle-Cloud-US
+name: Deploy to Oracle Cloud US
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ jobs:
   build:
     runs-on: [self-hosted]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Add .env file from repository secrets
         run: echo "${{ secrets.ENV_FILE }}" > .env
       - name: Build the Docker image
