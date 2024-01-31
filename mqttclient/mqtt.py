@@ -81,11 +81,12 @@ def on_message(mqtt_client, userdata, msg):
             sensor_id=Sensor(id=json_payload["sensor_id"]),
             data=json_payload["data"]
         )
-        print(datetime.datetime.now())
-        print(f'Topic: {msg.topic} \n Payload: {json_payload}\n')
+        if settings.DEBUG:
+            print(datetime.datetime.now())
+            print(f'Topic: {msg.topic} \n Payload: {json_payload}\n')
 
         # Saving Sensor Data_PZEM-004t
-        # Ideally the list [1,2] should be replaced by a query that collects all ids in the system for available PZEM-004t sensors in case a new sensor is added later on.
+        # The list [1,2] should be replaced by a query that collects all ids in the system for available PZEM-004t sensors in case a new sensor is added later on.
         if json_payload["sensor_id"] in [1, 2]:
             Data_PZEM004t.objects.create(sensor_id=Sensor(id=json_payload["sensor_id"]),
                                          sensor_address=json_payload["data"]["address"],
