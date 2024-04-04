@@ -8,11 +8,23 @@ class Sensor_Type(models.Model):
     """Type of sensing variable (Temperature, Humidity, etc)"""
     type = models.CharField(max_length=255, unique=True)
 
+    def __str__(self) -> str:
+        return f"{self.type}"
+    
+    class Meta:
+        verbose_name = "Sensor Type"
+
 
 class Sensor_Configuration(models.Model):
     description = models.CharField(max_length=255, null=True, default=None)
     update_ms = models.IntegerField(null=False)
-    params = models.JSONField(null=True, default=None)
+    params = models.JSONField(null=True, blank=True, default=None)
+
+    def __str__(self) -> str:
+        return f"{self.description}"
+    
+    class Meta:
+        verbose_name = "Configuration"
 
 
 class Sensor(models.Model):
@@ -22,6 +34,9 @@ class Sensor(models.Model):
     location = models.CharField(max_length=255)
     sensor_configuration = models.ForeignKey(
         Sensor_Configuration, null=True, on_delete=models.SET_NULL)
+    
+    def __str__(self) -> str:
+        return f"{self.id} - {self.name}"
 
 
 class TimescaleModel(models.Model):
@@ -31,7 +46,6 @@ class TimescaleModel(models.Model):
     be inheritted by another class for use.
     """
     time = TimescaleDateTimeField(interval="1 day", default=now)
-
     objects = TimescaleManager()
 
     class Meta:

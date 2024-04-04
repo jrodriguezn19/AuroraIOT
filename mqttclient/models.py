@@ -4,11 +4,14 @@ from sensors.models import Sensor
 # from django.contrib.contenttypes.fields import GenericForeignKey
 # from django.contrib.contenttypes.models import ContentType
 
-
+# Model to store all data (any) recevied via MQTT
 class Data_Received(models.Model):
     time = models.DateTimeField(auto_now_add=True, null=False)
     sensor_id = models.ForeignKey(Sensor, on_delete=models.PROTECT)
     data = models.JSONField(null=True)
+    
+    def __str__(self) -> str:
+        return f"{self.time}"
 
     # #Required fields to enable a generic relation
     # content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE) #Sensor class/model #would it better on_delete=models.PROTECT ???
