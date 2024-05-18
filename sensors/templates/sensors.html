@@ -11,6 +11,7 @@
     <h1>Sensors</h1>
     <table>
       <tr bgcolor="grey">
+        <th>Time</th>
         <th>Sensor id</th>
         <th>Sensor</th>
         <th>Brand</th>
@@ -22,18 +23,19 @@
         <th>Power Factor</th>
         <th>Energy Consumed(kWh)</th>
       </tr>
-        {%for data in data%}
+        {%for row in data%}
         <tr bgcolor="lightgrey">
-            <td>{{data.sensor_id}}</td>
-            <td>{{data.sensor_id__name}}</td>
-            <td>{{data.sensor_id__brand}}</td>
-            <td>{{data.sensor_id__type__type}}</td>
-            <td>{{data.sensor_id__location}}</td>
-            <td>{{data.data.V}}</td>
-            <td>{{data.data.A}}</td>
-            <td>{{data.data.F}}</td>
-            <td>{{data.data.PF}}</td>
-            <td>{{data.data.E}}</td>
+            <td>{{row.time}}</td>
+            <td>{{row.sensor_id}}</td>
+            <td>{{row.sensor_id__name}}</td>
+            <td>{{row.sensor_id__brand}}</td>
+            <td>{{row.sensor_id__type__type}}</td>
+            <td>{{row.sensor_id__location}}</td>
+            <td>{{row.data.voltage}}</td>
+            <td>{{row.data.current}}</td>
+            <td>{{row.data.frequency}}</td>
+            <td>{{row.data.pf}}</td>
+            <td>{{row.data.energy}}</td>
         </tr>
         {% endfor %}
     </table>
