@@ -13,8 +13,3 @@ class DataPZEM004tSerializer(serializers.ModelSerializer):
         model = Data_PZEM004t
         #fields = '__all__' #All fields shouldn't be exposed by default, expose just what is needed
         fields = ['id', 'sensor_id', 'time', 'volts', 'amps', 'frequency', 'watts', 'energy', 'power_factor', ]
-
-    
-    
-
-

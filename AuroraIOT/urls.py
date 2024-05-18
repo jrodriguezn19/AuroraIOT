@@ -24,8 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.homepage),
     path('mqtt/', include('mqttclient.urls')),
-    path('sensors/', include('sensors.urls')),
-    path('api/', include('api.urls')),
+    path('api/', include('sensors.urls')),
+    # path('api/', include('api.urls')),
     path('api/docs/', include_docs_urls(title="AuroraIOT API v1")),
 ]
 if 'debug_toolbar' in settings.INSTALLED_APPS:

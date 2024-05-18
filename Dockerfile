@@ -41,8 +41,15 @@ EXPOSE 9000
 
 #CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000", "--noreload"]
 
+#Make Migrations
+RUN python3 manage.py makemigrations --noinput --settings=AuroraIOT.settings.mqtt_off
+
+#Migrate
+RUN python3 manage.py migrate --noinput --settings=AuroraIOT.settings.mqtt_off
+
 #python3 manage.py collectstatic
 RUN python3 manage.py collectstatic --noinput --settings=AuroraIOT.settings.mqtt_off
+
 #--noinput 
 #--settings=AuroraIOT.settings.firstTime
 
