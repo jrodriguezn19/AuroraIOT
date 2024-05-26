@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # Core apps
     'sensors',
     'mqttclient',
+    'test_app'
 
 ]
 

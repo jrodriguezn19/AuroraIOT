@@ -27,6 +27,7 @@ urlpatterns = [
     path('api/', include('sensors.urls')),
     # path('api/', include('api.urls')),
     path('api/docs/', include_docs_urls(title="AuroraIOT API v1")),
+    path('test/', include('test_app.urls')),
 ]
 if 'debug_toolbar' in settings.INSTALLED_APPS:
     urlpatterns.append(path('__debug__/', include('debug_toolbar.urls')))

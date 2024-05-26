@@ -6,9 +6,9 @@ print("Using MQTT_OFF settings")
 MQTT_ACTIVE = False
 print(f"MQTT active status is: {MQTT_ACTIVE}")
 
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 # MQTT Config
 MQTT_SERVER = config('MQTT_SERVER_PROD')
