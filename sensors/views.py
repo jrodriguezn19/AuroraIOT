@@ -1,18 +1,18 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ReadOnlyModelViewSet
 from sensors.models import *
 from .serializers import SensorSerializer, DataPZEM004tSerializer
 from .filters import SensorDataFilter
 
-class SensorViewSet(ModelViewSet):
+class SensorViewSet(ReadOnlyModelViewSet):
     queryset = Sensor.objects.all().order_by('id')
     serializer_class = SensorSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter]
     filterset_fields = ['id']
     search_fields = ['name', 'brand']
 
-class SensorDataViewSet(ModelViewSet):
+class SensorDataViewSet(ReadOnlyModelViewSet):
     queryset = Data_PZEM004t.objects.all().order_by('id')
     serializer_class = DataPZEM004tSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter]
