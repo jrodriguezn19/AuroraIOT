@@ -141,10 +141,19 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        #Default permissiong if nothing is specified (Allows allow users unrestricted access).
+        #'rest_framework.permissions.AllowAny',
+        #API Only accessible to registered users.
+        #"rest_framework.permissions.IsAuthenticated",
+        #Read only API Accessible to unauthenticated users. Complete access to authenticated users.
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly"
+
+    ],
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
     'COERCE_DECIMAL_TO_STRING': False,
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 10
+    'PAGE_SIZE': 10,
 }
 
 
