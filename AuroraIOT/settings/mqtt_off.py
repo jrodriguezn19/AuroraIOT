@@ -8,7 +8,7 @@ print(f"MQTT active status is: {MQTT_ACTIVE}")
 
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # MQTT Config
 MQTT_SERVER = config('MQTT_SERVER_PROD')

@@ -15,7 +15,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 #     "http://127.0.0.1:8000",
 # ]
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['*']
 # Adding Django Debug Tool bar
 # Check if django-debug-toolbar package is installed without making the actual import of 'debug_toolbar'
 import importlib.util
