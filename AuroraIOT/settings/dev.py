@@ -8,6 +8,13 @@ print(f"MQTT active status is: {MQTT_ACTIVE}")
 
 DEBUG = True
 
+CORS_ALLOW_ALL_ORIGINS = True
+
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:8000",
+#     "http://127.0.0.1:8000",
+# ]
+
 ALLOWED_HOSTS = ["*"]
 # Adding Django Debug Tool bar
 # Check if django-debug-toolbar package is installed without making the actual import of 'debug_toolbar'
