@@ -13,7 +13,9 @@ class SensorViewSet(ReadOnlyModelViewSet):
     search_fields = ['name', 'brand']
 
 class SensorDataViewSet(ReadOnlyModelViewSet):
-    queryset = Data_PZEM004t.objects.all().order_by('time')
+    #.order_by('time') is required to avoid pagination inconsistencies.
+    # A warning raised if not present
+    queryset = Data_PZEM004t.objects.all().order_by('id')
     serializer_class = DataPZEM004tSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_class = SensorDataFilter
@@ -22,7 +24,7 @@ class SensorDataViewSet(ReadOnlyModelViewSet):
     # available fields to order
     ordering_fields = ["time"]
     # default ordering
-    ordering = ["time"]
+    #ordering = ["id"]
 
     def get_queryset(self):
         sensor_pk = self.kwargs['sensor_pk']
