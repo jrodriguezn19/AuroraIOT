@@ -13,11 +13,16 @@ class SensorViewSet(ReadOnlyModelViewSet):
     search_fields = ['name', 'brand']
 
 class SensorDataViewSet(ReadOnlyModelViewSet):
-    queryset = Data_PZEM004t.objects.all().order_by('id')
+    queryset = Data_PZEM004t.objects.all().order_by('time')
     serializer_class = DataPZEM004tSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_class = SensorDataFilter
+    #field to find individual instances of the model, aka: data in an specific time
     lookup_field = 'id' 
+    # available fields to order
+    ordering_fields = ["time"]
+    # default ordering
+    ordering = ["time"]
 
     def get_queryset(self):
         sensor_pk = self.kwargs['sensor_pk']

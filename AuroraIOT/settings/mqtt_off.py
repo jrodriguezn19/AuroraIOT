@@ -10,6 +10,25 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
+
+# Adding Django Debug Tool bar
+# Check if django-debug-toolbar package is installed without making the actual import of 'debug_toolbar'
+import importlib.util
+
+if importlib.util.find_spec("debug_toolbar"):
+    INSTALLED_APPS.append("debug_toolbar")
+
+    """The order of MIDDLEWARE is important. You should include the Debug Toolbar middleware as early as possible in the list. 
+    However, it must come after any other middleware that encodes the response’s content, such as GZipMiddleware."""
+    MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
+else:
+    import sys
+
+    sys.exit(
+        "Error: Module 'debug_toolbar' not found, please install with 'pipenv install --dev django-debug-toolbar'. Terminating application"
+    )
+
+
 # MQTT Config
 MQTT_SERVER = config('MQTT_SERVER_PROD')
 MQTT_PORT = config('MQTT_PORT_PROD')
