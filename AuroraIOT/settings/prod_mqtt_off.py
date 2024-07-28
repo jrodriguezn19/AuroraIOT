@@ -17,7 +17,7 @@ MQTT_PORT = config("MQTT_PORT_PROD")
 MQTT_CLIENT_ID = "id-django-mqttclient-production"
 MQTT_USER = config("MQTT_USER_PROD")
 MQTT_PASSWORD = config("MQTT_PASSWORD_PROD")
-
+MQTT_KEEPALIVE = 60
 
 # Timescaledb
 DATABASES = {

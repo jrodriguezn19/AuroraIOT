@@ -16,8 +16,10 @@ CORS_ALLOW_ALL_ORIGINS = True
 # ]
 
 ALLOWED_HOSTS = ['*']
-# Adding Django Debug Tool bar
-# Check if django-debug-toolbar package is installed without making the actual import of 'debug_toolbar'
+
+# Django Debug Tool Bar
+# Check if django-debug-toolbar package is installed 
+# without making the actual import of 'debug_toolbar'
 import importlib.util
 
 if importlib.util.find_spec("debug_toolbar"):
@@ -33,13 +35,21 @@ else:
         "Error: Module 'debug_toolbar' not found, please install with 'pipenv install --dev django-debug-toolbar'. Terminating application"
     )
 
+def show_toolbar(request):
+    return True
+
+
+DEBUG_TOOLBAR_CONFIG = {
+    "SHOW_TOOLBAR_CALLBACK": show_toolbar,
+}    
+
 # MQTT Config
 MQTT_SERVER = config("MQTT_SERVER_DEV")
 MQTT_PORT = config("MQTT_PORT_DEV")
 MQTT_CLIENT_ID = "id-django-mqttclient-development"
 MQTT_USER = config("MQTT_USER_DEV")
 MQTT_PASSWORD = config("MQTT_PASSWORD_DEV")
-
+MQTT_KEEPALIVE = 60
 # SQLITE
 # DATABASES = {
 #     "default": {
@@ -73,10 +83,4 @@ DATABASES = {
 # }
 
 
-def show_toolbar(request):
-    return True
 
-
-DEBUG_TOOLBAR_CONFIG = {
-    "SHOW_TOOLBAR_CALLBACK": show_toolbar,
-}

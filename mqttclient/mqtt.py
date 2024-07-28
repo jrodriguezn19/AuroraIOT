@@ -19,24 +19,23 @@ from django.conf import settings
 # 6-255: Currently unused.
 
 
-# callback function
+# The callback for when the client receives a CONNACK response from the server.
 def on_connect(mqtt_client, userdata, flags, rc):
     print("MQTT: Connected with result code " + str(rc))
     if rc == 0:
         mqtt_client.connected_flag = True
         print('MQTT: Connected successfully, returned code=', rc)
-        mqtt_client.subscribe('auroraiot/energy')
+        mqtt_client.subscribe('auroraiot/energy', qos=1)
     else:
         print('MQTT: Bad connection, returned code=', rc)
         mqtt_client.bad_connection_flag = True
 
 
-# callback function
+
 FIRST_RECONNECT_DELAY = 1
 RECONNECT_RATE = 2
 MAX_RECONNECT_COUNT = 12
 MAX_RECONNECT_DELAY = 60
-
 
 def on_disconnect(mqtt_client, userdata, rc):
     # logging.info("Disconnected with result code: %s", rc)
@@ -71,7 +70,7 @@ def on_disconnect(mqtt_client, userdata, rc):
 #         print("MQTT: Disconnected, returned code=", rc)
 
 
-# callback function
+# The callback for when a PUBLISH message is received from the server.
 def on_message(mqtt_client, userdata, msg):
     string_payload = msg.payload.decode('utf8').replace("'", '"')
     try:
@@ -126,17 +125,19 @@ if settings.MQTT_ACTIVE:
     client.username_pw_set(settings.MQTT_USER, settings.MQTT_PASSWORD)
     client.connected_flag = False
     client.bad_connection_flag = False
+    print("Connecting to MQTT Broker:")
+    print(settings.MQTT_SERVER, settings.MQTT_PORT)
     try:
-        print(settings.MQTT_SERVER, settings.MQTT_PORT)
         client.connect(
             host=settings.MQTT_SERVER,
             # The port needs to be passed as int, not str.
             port=int(settings.MQTT_PORT),
-            keepalive=60)
-    except:
+            keepalive=settings.MQTT_KEEPALIVE)
+    except Exception as e:
         print("MQTT client.connect() failed to connect")
-        print(f"MQTT failed connection to broker server address: {settings.MQTT_SERVER} and port: {settings.MQTT_PORT}")
-        exit(1)
+        print("The error was: ", e)
+        #print(f"MQTT failed connection to broker server address: {settings.MQTT_SERVER} and port: {settings.MQTT_PORT}")
+        # exit(1)
 
     # not sure if this loop is good
     # while not client.connected_flag and not client.bad_connection_flag: #wait in loop
