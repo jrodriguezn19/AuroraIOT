@@ -5,7 +5,9 @@ class MqttclientConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'mqttclient'
 
-    def ready(self):
-        from mqttclient import mqtt      
-        if settings.MQTT_ACTIVE:
-            mqtt.client.loop_start()
+    #runn the loop_start only after all django is ready, but if might not be necessary
+    # def ready(self):
+    #     from mqttclient import mqtt      
+    #     if settings.MQTT_ACTIVE:
+    #         mqtt.client.loop_start()
+    #         print("MQTT: Loop started")
