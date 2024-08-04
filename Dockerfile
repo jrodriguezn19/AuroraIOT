@@ -54,4 +54,5 @@ RUN python3 manage.py collectstatic --noinput --settings=AuroraIOT.settings.prod
 #--settings=AuroraIOT.settings.firstTime
 
 #gunicorn AuroraIOT.wsgi -b 0.0.0.0:8000 -e DJANGO_SETTINGS_MODULE=AuroraIOT.settings.prod
-CMD ["gunicorn", "AuroraIOT.wsgi", "-b", "0.0.0.0:9000", "-e", "DJANGO_SETTINGS_MODULE=AuroraIOT.settings.prod"]
+#CMD ["gunicorn", "AuroraIOT.wsgi", "-b", "0.0.0.0:9000", "-e", "DJANGO_SETTINGS_MODULE=AuroraIOT.settings.prod"]
+CMD ["gunicorn", "AuroraIOT.wsgi", "-c", "gunicorn.conf.py"]
