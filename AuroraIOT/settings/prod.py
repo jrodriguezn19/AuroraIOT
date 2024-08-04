@@ -15,7 +15,8 @@ DEBUG = False
 #     "http://127.0.0.1:8000",
 # ]
 
-ALLOWED_HOSTS = ['.georgedeveloper.com']
+# ALLOWED_HOSTS = ['.georgedeveloper.com']
+ALLOWED_HOSTS = ['*']
 
 # MQTT Config
 MQTT_SERVER = config('MQTT_SERVER_PROD')
