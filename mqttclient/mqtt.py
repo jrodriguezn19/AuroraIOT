@@ -2,9 +2,11 @@ import paho.mqtt.client as mqtt
 from sensors.models import *
 from mqttclient.models import *
 import json
-import datetime
 import time
 from django.conf import settings
+import logging
+
+logger = logging.getLogger(__name__)
 
 # from django.contrib.contenttypes.models import ContentType
 
@@ -28,10 +30,10 @@ def on_connect(client, userdata, flags, rc):
     '''
     if rc == 0:
         client.connected_flag = True
-        print('MQTT: Connected successfully, returned code = ', rc)
+        logger.info(f'MQTT: Connected successfully, returned code = {rc}')
         client.subscribe('auroraiot/energy', qos=0)
     else:
-        print('MQTT: Bad connection, returned code =', rc)
+        logger.error(f'MQTT: Bad connection, returned code = {rc}')
         client.bad_connection_flag = True
 
 
@@ -43,22 +45,22 @@ MAX_RECONNECT_DELAY = 60
 
 def on_disconnect(client, userdata, rc):
     # logging.info("Disconnected with result code: %s", rc)
-    print("on_disconnect() was run")
+    logger.warning("on_disconnect() was run")
     client.connected_flag = False
     reconnect_count, reconnect_delay = 0, FIRST_RECONNECT_DELAY
     while reconnect_count < MAX_RECONNECT_COUNT:
         # logging.info("Reconnecting in %d seconds...", reconnect_delay)
-        print(f"MQTT: Reconnecting in {reconnect_delay} seconds...")
+        logger.info(f"MQTT: Reconnecting in {reconnect_delay} seconds...")
         time.sleep(reconnect_delay)
 
         try:
             client.reconnect()
             # logging.info("Reconnected successfully!")
-            print("MQTT: Reconnected successfully!")
+            logger.info("MQTT: Reconnected successfully!")
             return
         except Exception as err:
             # logging.error("%s. Reconnect failed. Retrying...", err)
-            print(f"MQTT: {err}. Reconnect failed. Retrying...")
+            logger.error(f"MQTT: {err}. Reconnect failed. Retrying...")
 
         reconnect_delay *= RECONNECT_RATE
         reconnect_delay = min(reconnect_delay, MAX_RECONNECT_DELAY)
@@ -71,9 +73,9 @@ def on_disconnect(client, userdata, rc):
 #     client.disconnect_flag=True
 #     #client.loop_stop(force=False) # removed instruction so it will try to reconnect automatically
 #     if rc != 0:
-#         print("MQTT: Unexpected disconnection, returned code=", rc)
+#         logger.error("MQTT: Unexpected disconnection, returned code=", rc)
 #     else:
-#         print("MQTT: Disconnected, returned code=", rc)
+#         logger.error("MQTT: Disconnected, returned code=", rc)
 
 
 # The callback for when a PUBLISH message is received from the server.
@@ -88,8 +90,7 @@ def on_message(mqtt_client, userdata, msg):
         )
         # Print Data received MQTT only if Debug is True
         if settings.DEBUG:
-            print(datetime.datetime.now())
-            print(f'Topic: {msg.topic} \n Payload: {json_payload}\n')
+            logger.debug(f'Topic: {msg.topic} Payload: {json_payload}')
 
         # Saving Sensor Data_PZEM-004t
         # The list [1,2] should be replaced by a query that collects all ids in the system for available PZEM-004t sensors in case a new sensor is added later on.
@@ -118,9 +119,9 @@ def on_message(mqtt_client, userdata, msg):
         # Data.objects.create(object_id=Sensor(id=json_payload["sensor_id"]), data=json_payload["data"])
         ######
     except ValueError as err:
-        print("MQTT: Json data recevied not valid or empty - Error:", err)
-        print("MQTT: Erroneous payload received was: ", string_payload)
-        print("")
+        logger.error(f"MQTT: Json data recevied not valid or empty - Error: {err}")
+        logger.error(f"MQTT: Erroneous payload received was: {string_payload}")
+
 
 
 client = mqtt.Client(client_id=settings.MQTT_CLIENT_ID)
@@ -131,8 +132,7 @@ if settings.MQTT_ACTIVE:
     client.username_pw_set(settings.MQTT_USER, settings.MQTT_PASSWORD)
     client.connected_flag = False
     client.bad_connection_flag = False
-    print("MQTT: Connecting to Broker:")
-    print(settings.MQTT_SERVER, settings.MQTT_PORT)
+    logger.info(f"MQTT: Connecting to Broker {settings.MQTT_SERVER}, {settings.MQTT_PORT}")
     try:
         client.connect(
             host=settings.MQTT_SERVER,
@@ -143,10 +143,10 @@ if settings.MQTT_ACTIVE:
         #http://www.steves-internet-guide.com/loop-python-mqtt-client/
         #look for: Implementation Note
         client.loop_start()
-        print("MQTT: Loop started")
+        logger.debug("MQTT: Loop started")
         #Enter into a waiting loop while the connection is completed
         while not client.connected_flag and not client.bad_connection_flag: #wait in loop while the connection is completed
-            print("MQTT: Waiting in while loop for connection")
+            logger.debug("MQTT: Waiting in while loop for connection")
             time.sleep(1)
         #This part could be useful for an independent script but not for something like Django
         #because we want to keep the responding even if the MQTT is down
@@ -156,15 +156,7 @@ if settings.MQTT_ACTIVE:
 
 
     except Exception as e:
-        print("MQTT: client.connect() connection failed")
-        print("The error was: ", e)
-        #print(f"MQTT failed connection to broker server address: {settings.MQTT_SERVER} and port: {settings.MQTT_PORT}")
+        logger.error(f"MQTT: client.connect() connection failed, the error was: {e}")
+        #logger.error(f"MQTT failed connection to broker server address: {settings.MQTT_SERVER} and port: {settings.MQTT_PORT}")
         # exit(1)
 
-    # not sure if this loop is good
-    # while not client.connected_flag and not client.bad_connection_flag: #wait in loop
-    #     print("In wait loop")
-    #     time.sleep(1)
-    #     if client.bad_connection_flag:
-    #         client.loop_stop()    #Stop loop
-    #         exit(1)

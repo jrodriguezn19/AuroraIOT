@@ -1,10 +1,10 @@
 from .common import *
 
-print("Using MQTT_OFF settings")
+logger.info("Using MQTT_OFF settings")
 
 # Activate or deactivate MQTT operation
 MQTT_ACTIVE = False
-print(f"MQTT active status is: {MQTT_ACTIVE}")
+logger.info(f"MQTT active status is: {MQTT_ACTIVE}")
 
 DEBUG = False
 

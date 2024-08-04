@@ -1,10 +1,10 @@
 from .common import *
 
-print("Using DEV settings")
+logger.info("Using DEV settings")
 
 # Activate or deactivate MQTT operation
 MQTT_ACTIVE = True
-print(f"MQTT active status is: {MQTT_ACTIVE}")
+logger.info(f"MQTT active status is: {MQTT_ACTIVE}")
 
 DEBUG = True
 
