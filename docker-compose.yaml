@@ -9,5 +9,5 @@ services:
     restart: always
     container_name: auroraiot-backend
     volumes:
-      - ~/auroraiot/log:/app/log
+      - ~/auroraiot/logs:/app/logs
 
