@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Removing previous container
-        run: docker compose down || true
+        run: docker compose down --rmi 'local' || true
 
       - name: Add .env file from repository secrets
         run: echo "${{ secrets.ENV_FILE }}" > .env
