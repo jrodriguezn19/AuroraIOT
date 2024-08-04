@@ -8,13 +8,12 @@ jobs:
     runs-on: [self-hosted]
     steps:
       - uses: actions/checkout@v4
+
+      - name: Removing previous container
+        run: docker compose down || true
+
       - name: Add .env file from repository secrets
         run: echo "${{ secrets.ENV_FILE }}" > .env
-      - name: Build the Docker image
-        run: sudo docker build . --file Dockerfile --tag auroraiot
-      - name: Stop current container
-        run:  sudo docker stop auroraiot-backend || true
-      - name: Delete current container
-        run:  sudo docker rm auroraiot-backend || true
-      - name: Run new AuroraIOT container 
-        run: sudo docker run -d -p 9000:9000 --restart=always --name auroraiot-backend auroraiot
+
+      - name: Creating and starting new container
+        run: docker compose up --build -d || true
