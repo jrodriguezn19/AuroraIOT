@@ -1,0 +1,8 @@
+.vscode
+.github
+.git
+.gitignore
+db.sqlite3
+.sh
+*.log
+gunicorn.conf.py
