@@ -6,9 +6,11 @@ services:
     ports:
       - 9000:9000
     restart: always
-    container_name: auroraiot-backend
+    container_name: auroraiot
     volumes:
+      #host:container
       - ~/auroraiot/logs:/app/logs
+    #to join this container in the bridge network and not create a new network
     network_mode: bridge
 
 
