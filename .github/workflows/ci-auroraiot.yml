@@ -1,4 +1,4 @@
-name: AuroraIOT-CI_CD
+name: CI - Auroraiot
 on:
   push:
     branches: [ "master" ]

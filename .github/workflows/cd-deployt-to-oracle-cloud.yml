@@ -1,4 +1,4 @@
-name: Deploy to Oracle Cloud US
+name: CD - Deploy to Oracle Cloud
 
 on:
   workflow_dispatch:
