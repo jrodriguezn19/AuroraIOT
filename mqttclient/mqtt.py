@@ -88,7 +88,7 @@ def on_message(mqtt_client, userdata, msg):
             sensor_id=Sensor(id=json_payload["sensor_id"]),
             data=json_payload["data"]
         )
-        # Print Data received MQTT only if Debug is True
+        # Print data received MQTT only if Debug is True
         if settings.DEBUG:
             logger.debug(f'Topic: {msg.topic} Payload: {json_payload}')
 
