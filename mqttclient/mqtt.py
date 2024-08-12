@@ -119,8 +119,9 @@ def on_message(mqtt_client, userdata, msg):
         # Data.objects.create(object_id=Sensor(id=json_payload["sensor_id"]), data=json_payload["data"])
         ######
     except ValueError as err:
-        logger.error(f"MQTT: Json data recevied not valid or empty - Error: {err}")
-        logger.error(f"MQTT: Erroneous payload received was: {string_payload}")
+        if string_payload != "ESP32 Connected to MQTT Broker":
+            logger.error(f"MQTT: Json data recevied not valid or empty - Error: {err}")
+            logger.error(f"MQTT: Erroneous payload received was: {string_payload}")
 
 
 
