@@ -4,6 +4,8 @@
 
 AuroraIOT is a Python and Django-based application designed for real-time energy consumption monitoring in buildings. By leveraging pzem-004t sensors and ESP32 microcontrollers, AuroraIOT captures precise energy consumption data and transmits it securely and efficiently via Wi-Fi using the MQTT protocol. This data is processed by the central AuroraIOT backend, providing building managers with accurate and timely insights for optimizing building management.
 
+![image](https://github.com/user-attachments/assets/7edb3edf-1566-4256-ac5b-6c0dbe2b16c5)
+
 ## Features
 
 - **Real-Time Monitoring**: Continuously monitor energy consumption with high precision.
