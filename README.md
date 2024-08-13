@@ -71,7 +71,3 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## Contact
 
 For any inquiries or support, please contact [jrodrigueznocua@gmail.com](mailto:your-email@example.com).
-
----
-
-Feel free to customize the sections, such as **Installation**, **Configuration**, and **Contact**, to better fit your project's specifics.
