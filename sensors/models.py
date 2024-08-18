@@ -70,6 +70,6 @@ class Data_PZEM004t(TimescaleModel):
     # W
     watts = models.DecimalField(max_digits=6, decimal_places=2)
     # kWh
-    energy = models.DecimalField(max_digits=5, decimal_places=2)
+    energy = models.DecimalField(max_digits=6, decimal_places=2)
     # power factor (0.00 to 1.00) is multiplied by 100 to store integer values (0 to 100).
     power_factor = models.PositiveSmallIntegerField()
