@@ -32,6 +32,8 @@ services:
 
 
   backend:
+    #if image is alredy in the host the use image instead of build
+    #image: auroraiot-app
     build: ./
     depends_on:
       db:
