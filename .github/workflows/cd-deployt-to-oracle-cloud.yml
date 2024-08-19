@@ -9,11 +9,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Removing previous backend container
+      - name: Removing previous backend (only) container
         run: docker compose down --rmi 'local' backend
 
       - name: Add .env file from repository secrets
         run: echo "${{ secrets.ENV_FILE }}" > .env
 
-      - name: Creating and starting new backend container
+      - name: Creating and starting new backend (only) container
         run: docker compose up --build -d backend
