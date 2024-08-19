@@ -33,6 +33,9 @@ services:
 
   backend:
     build: ./
+    depends_on:
+      db:
+        condition: service_healthy
     ports:
       - 9000
     container_name: auroraiot
@@ -42,6 +45,7 @@ services:
     networks:
       - auroraiot_net
     restart: always
+
 
   db:
     image: timescale/timescaledb:latest-pg16
