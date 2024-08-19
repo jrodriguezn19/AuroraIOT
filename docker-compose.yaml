@@ -1,17 +1,71 @@
-version: "3.8"
-
 services:
-  app:
+  proxy:
+    image: nginx:latest
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ~/nginx/conf.d:/etc/nginx/conf.d
+      - ~/nginx/logs:/var/log/nginx
+      - ~/nginx/www:/var/www
+    container_name: nginx
+    networks:
+      - auroraiot_net
+    restart: always
+
+
+  mqtt_broker:
+    image: eclipse-mosquitto:latest
+    container_name: mosquitto
+    ports:
+        - 1883:1883
+        - 8883:8883
+        - 9001:9001
+    volumes:
+        - ~/mosquitto/config:/mosquitto/config
+        - ~/mosquitto/data:/mosquitto/data
+        - ~/mosquitto/log:/mosquitto/log
+        - ~/mosquitto/passwd_file:/mosquitto/passwd_file
+    networks:
+      - auroraiot_net
+    restart: always
+
+
+  backend:
     build: ./
     ports:
-      - 9000:9000
-    restart: always
+      - 9000
     container_name: auroraiot
     volumes:
       #host:container
       - ~/auroraiot/logs:/app/logs
-    #to join this container in the bridge network and not create a new network
-    network_mode: bridge
+    networks:
+      - auroraiot_net
+    restart: always
+
+  db:
+    image: timescale/timescaledb:latest-pg16
+    container_name: auroraiotdb
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: TimescalePass6308
+      POSTGRES_DB: auroraiotdb
+    ports:
+      - 5432:5432
+    volumes:
+    #Host volume (not used any more since named volumes are recommended)
+    #  - ~/timescaledb/postgresql-data:/var/lib/postgresql/data
+    #Name volume
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - auroraiot_net
 
 
+volumes:
+  db-data:
 
+networks:
+  auroraiot_net:
+    name: auroraiot_net
+    driver: bridge
