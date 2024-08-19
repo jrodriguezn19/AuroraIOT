@@ -16,4 +16,4 @@ jobs:
         run: echo "${{ secrets.ENV_FILE }}" > .env
 
       - name: Creating and starting new container
-        run: docker compose up --build -d || true
+        run: docker compose up --build -d 
