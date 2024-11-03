@@ -15,7 +15,7 @@ class SensorViewSet(ReadOnlyModelViewSet):
 class SensorDataViewSet(ReadOnlyModelViewSet):
     #.order_by('time') is required to avoid pagination inconsistencies.
     # A warning raised if not present
-    queryset = Data_PZEM004t.objects.all().order_by('id')
+    queryset = Data_PZEM004t.objects.all()#.order_by('id')
     serializer_class = DataPZEM004tSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_class = SensorDataFilter
