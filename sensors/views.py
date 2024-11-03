@@ -6,7 +6,7 @@ from .serializers import SensorSerializer, DataPZEM004tSerializer
 from .filters import SensorDataFilter
 
 class SensorViewSet(ReadOnlyModelViewSet):
-    queryset = Sensor.objects.all().order_by('id')
+    queryset = Sensor.objects.all().order_by("pk")
     serializer_class = SensorSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter]
     filterset_fields = ['id']
@@ -15,7 +15,7 @@ class SensorViewSet(ReadOnlyModelViewSet):
 class SensorDataViewSet(ReadOnlyModelViewSet):
     #.order_by('time') is required to avoid pagination inconsistencies.
     # A warning raised if not present
-    queryset = Data_PZEM004t.objects.all()#.order_by('id')
+    queryset = Data_PZEM004t.objects.all().order_by("time")
     serializer_class = DataPZEM004tSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_class = SensorDataFilter
