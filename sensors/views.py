@@ -1,34 +1,39 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.viewsets import ReadOnlyModelViewSet
-from sensors.models import *
+from sensors.models import Sensor, Data_PZEM004t
 from .serializers import SensorSerializer, DataPZEM004tSerializer
 from .filters import SensorDataFilter
 
 class SensorViewSet(ReadOnlyModelViewSet):
-    queryset = Sensor.objects.all().order_by("pk")
+    queryset = Sensor.objects.all()
     serializer_class = SensorSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter]
     filterset_fields = ['id']
     search_fields = ['name', 'brand']
 
 class SensorDataViewSet(ReadOnlyModelViewSet):
-    #.order_by('time') is required to avoid pagination inconsistencies.
-    # A warning raised if not present
-    queryset = Data_PZEM004t.objects.all().order_by("time")
+    """
+    Read sensor data for a specific sensor. Ordered by timestamp.
+    """
     serializer_class = DataPZEM004tSerializer
     filter_backends = [DjangoFilterBackend, OrderingFilter]
     filterset_class = SensorDataFilter
-    #field to find individual instances of the model, aka: data in an specific time
-    lookup_field = 'id' 
-    # available fields to order
-    ordering_fields = ["time"]
-    # default ordering
-    #ordering = ["id"]
 
+    # Use natural key if you want URLs like `/sensors/<pk>/data/2023-07-01T12:00:00Z/`
+    lookup_field = 'time'            # or keep default PK
+    ordering_fields = ['time']
+    ordering = ['-time']             # newest first by default
+        
     def get_queryset(self):
-        sensor_pk = self.kwargs['sensor_pk']
-        return self.queryset.filter(sensor_id=sensor_pk)
+        return (
+            Data_PZEM004t.objects
+            .filter(sensor_id=self.kwargs['sensor_pk'])
+            .select_related('sensor_id')
+            .order_by('-time')
+        )
+
+
 
 
 # from django.shortcuts import render

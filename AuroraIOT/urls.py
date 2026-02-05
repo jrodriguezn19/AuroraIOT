@@ -21,8 +21,8 @@ from . import views
 from django.conf import settings
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', views.homepage),
+    path('admin/', admin.site.urls),
     path('mqtt/', include('mqttclient.urls')),
     path('api/', include('sensors.urls')),
     # path('api/', include('api.urls')),
