@@ -1,9 +1,10 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.filters import SearchFilter
 from rest_framework.viewsets import ReadOnlyModelViewSet
 from sensors.models import Sensor, Data_PZEM004t
 from .serializers import SensorSerializer, DataPZEM004tSerializer
 from .filters import SensorDataFilter
+from .pagination import SensorDataCursorPagination
 
 class SensorViewSet(ReadOnlyModelViewSet):
     queryset = Sensor.objects.all()
@@ -14,17 +15,15 @@ class SensorViewSet(ReadOnlyModelViewSet):
 
 class SensorDataViewSet(ReadOnlyModelViewSet):
     """
-    Read sensor data for a specific sensor. Ordered by timestamp.
+    Read sensor data for a specific sensor. Ordered by timestamp, newest first.
+    Cursor-based pagination: use `next` / `previous` links in the response.
+    Supports ?time__gt and ?time__lt filters to narrow to a time range.
     """
     serializer_class = DataPZEM004tSerializer
-    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    pagination_class = SensorDataCursorPagination
+    filter_backends = [DjangoFilterBackend]
     filterset_class = SensorDataFilter
 
-    # Use natural key if you want URLs like `/sensors/<pk>/data/2023-07-01T12:00:00Z/`
-    lookup_field = 'time'            # or keep default PK
-    ordering_fields = ['time']
-    ordering = ['-time']             # newest first by default
-        
     def get_queryset(self):
         return (
             Data_PZEM004t.objects
