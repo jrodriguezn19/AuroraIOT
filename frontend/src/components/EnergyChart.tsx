@@ -35,23 +35,25 @@ const RANGES: { value: TimeRange; label: string }[] = [
   { value: '1y', label: '1Y' },
 ]
 
+const TZ = 'America/Bogota'
+
 function formatAxisTime(iso: string, range: TimeRange): string {
   const d = new Date(iso)
   if (range === '1y' || range === '6m') {
-    return d.toLocaleDateString('en-US', { month: 'short', year: '2-digit' })
+    return d.toLocaleDateString('en-US', { timeZone: TZ, month: 'short', year: '2-digit' })
   }
   if (range === '30d' || range === '7d') {
-    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+    return d.toLocaleDateString('en-US', { timeZone: TZ, month: 'short', day: 'numeric' })
   }
-  return d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })
+  return d.toLocaleTimeString('en-US', { timeZone: TZ, hour: '2-digit', minute: '2-digit', hour12: false })
 }
 
 function formatTooltipTime(iso: string): string {
   const d = new Date(iso)
   return (
-    d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) +
+    d.toLocaleDateString('en-US', { timeZone: TZ, month: 'short', day: 'numeric' }) +
     ' ' +
-    d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })
+    d.toLocaleTimeString('en-US', { timeZone: TZ, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })
   )
 }
 

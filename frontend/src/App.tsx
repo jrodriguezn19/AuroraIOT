@@ -38,7 +38,7 @@ export default function App() {
           <SensorSelector sensors={sensors} selectedId={sensorId} onChange={setSensorId} />
           {lastUpdated && (
             <span className="last-updated">
-              {lastUpdated.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })}
+              {lastUpdated.toLocaleTimeString('en-US', { timeZone: 'America/Bogota', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })}
             </span>
           )}
           <div className={`status-dot ${error ? 'error' : loading ? 'loading' : 'live'}`} title={error ?? 'Live'} />
