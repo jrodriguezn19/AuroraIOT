@@ -52,7 +52,7 @@ def on_message(mqtt_client, userdata, msg):
 
         Data_Received.objects.create(sensor_id=sensor, data=data)
 
-        if sensor.type.type == 'PZEM-004t':
+        if sensor.type.type == 'Energy':
             Data_PZEM004t.objects.create(
                 sensor_id=sensor,
                 sensor_address=data["address"],
