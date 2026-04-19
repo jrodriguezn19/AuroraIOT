@@ -32,19 +32,25 @@ const RANGES: { value: TimeRange; label: string }[] = [
   { value: '7d', label: '7D' },
 ]
 
-function formatTime(iso: string, range: TimeRange): string {
+function formatAxisTime(iso: string, range: TimeRange): string {
   const d = new Date(iso)
   if (range === '7d') {
-    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) +
-      ' ' + d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })
+    return (
+      d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) +
+      ' ' +
+      d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })
+    )
   }
   return d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })
 }
 
 function formatTooltipTime(iso: string): string {
   const d = new Date(iso)
-  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) +
-    ' ' + d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })
+  return (
+    d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) +
+    ' ' +
+    d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })
+  )
 }
 
 function getValue(point: DataPoint, metric: Metric): number {
@@ -103,7 +109,7 @@ export function EnergyChart({ history, metric, timeRange, onMetricChange, onRang
             <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
             <XAxis
               dataKey="time"
-              tickFormatter={t => formatTime(t, timeRange)}
+              tickFormatter={t => formatAxisTime(t, timeRange)}
               tick={{ fill: 'var(--text-muted)', fontSize: 12 }}
               tickLine={false}
               axisLine={{ stroke: 'var(--border)' }}
