@@ -5,7 +5,15 @@ import type { DataPoint, TimeRange } from '../types'
 const POLL_INTERVAL = 5000
 
 function rangeToWindow(range: TimeRange): number {
-  const hours = { '1h': 1, '6h': 6, '24h': 24, '7d': 168 }
+  const hours: Record<TimeRange, number> = {
+    '1h': 1,
+    '6h': 6,
+    '24h': 24,
+    '7d': 168,
+    '30d': 720,
+    '6m': 4380,
+    '1y': 8760,
+  }
   return hours[range] * 60 * 60 * 1000
 }
 
