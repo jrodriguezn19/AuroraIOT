@@ -73,3 +73,8 @@ class Data_PZEM004t(TimescaleModel):
     energy = models.DecimalField(max_digits=6, decimal_places=2)
     # power factor (0.00 to 1.00) is multiplied by 100 to store integer values (0 to 100).
     power_factor = models.PositiveSmallIntegerField()
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['sensor_id', '-time'], name='data_pzem004t_sensor_time_idx'),
+        ]

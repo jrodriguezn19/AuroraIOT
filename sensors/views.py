@@ -29,7 +29,6 @@ class SensorDataViewSet(ReadOnlyModelViewSet):
         return (
             Data_PZEM004t.objects
             .filter(sensor_id=self.kwargs['sensor_pk'])
-            .select_related('sensor_id')
             .order_by('-time')
         )
 
