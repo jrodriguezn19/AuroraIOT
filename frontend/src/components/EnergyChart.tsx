@@ -32,12 +32,25 @@ const RANGES: { value: TimeRange; label: string }[] = [
   { value: '7d', label: '7D' },
 ]
 
-function formatTime(iso: string, range: TimeRange): string {
+function formatAxisTime(iso: string, range: TimeRange): string {
   const d = new Date(iso)
   if (range === '7d') {
-    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+    return (
+      d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) +
+      ' ' +
+      d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })
+    )
   }
   return d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })
+}
+
+function formatTooltipTime(iso: string): string {
+  const d = new Date(iso)
+  return (
+    d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) +
+    ' ' +
+    d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })
+  )
 }
 
 function getValue(point: DataPoint, metric: Metric): number {
@@ -46,12 +59,12 @@ function getValue(point: DataPoint, metric: Metric): number {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function CustomTooltip({ active, payload, label, metric, range }: any) {
+function CustomTooltip({ active, payload, label, metric }: any) {
   if (!active || !payload?.length) return null
   const selected = METRICS.find(m => m.value === metric)
   return (
     <div className="chart-tooltip">
-      <div className="chart-tooltip-time">{formatTime(label, range)}</div>
+      <div className="chart-tooltip-time">{formatTooltipTime(label)}</div>
       <div className="chart-tooltip-value" style={{ color: `var(${selected?.colorVar})` }}>
         {Number(payload[0].value).toFixed(2)} {selected?.label.match(/\((.+)\)/)?.[1]}
       </div>
@@ -96,7 +109,7 @@ export function EnergyChart({ history, metric, timeRange, onMetricChange, onRang
             <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
             <XAxis
               dataKey="time"
-              tickFormatter={t => formatTime(t, timeRange)}
+              tickFormatter={t => formatAxisTime(t, timeRange)}
               tick={{ fill: 'var(--text-muted)', fontSize: 12 }}
               tickLine={false}
               axisLine={{ stroke: 'var(--border)' }}
@@ -110,7 +123,7 @@ export function EnergyChart({ history, metric, timeRange, onMetricChange, onRang
               domain={(['auto', 'auto'] as [string, string])}
             />
             <Tooltip
-              content={<CustomTooltip metric={metric} range={timeRange} />}
+              content={<CustomTooltip metric={metric} />}
               cursor={{ stroke: 'var(--border)', strokeWidth: 1 }}
             />
             <Line
