@@ -119,6 +119,25 @@ body {
 
 /* Metric grid */
 
+.metric-grid-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.data-age {
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.data-age.fresh {
+  color: var(--text-muted);
+}
+
+.data-age.stale {
+  color: var(--color-pf);
+}
+
 .metric-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
