@@ -8,13 +8,6 @@ logger.info(f"MQTT active status is: {MQTT_ACTIVE}")
 
 DEBUG = False
 
-#CORS_ALLOW_ALL_ORIGINS = True
-
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:8000",
-#     "http://127.0.0.1:8000",
-# ]
-
 ALLOWED_HOSTS = ['.georgedeveloper.com']
 CSRF_TRUSTED_ORIGINS = ['https://*.georgedeveloper.com']
 
@@ -37,23 +30,4 @@ DATABASES = {
         "PORT": config('DB_PORT_PROD'),
     }
 }
-
-# PostgreSQL
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": "auroraiotdb",
-#         "USER": config('DB_USERNAME_PROD'),
-#         "PASSWORD": config('DB_PASSWORD_PROD'),
-#         "HOST": config('DB_HOST_PROD'),
-#         "PORT": config('DB_PORT_PROD'),
-#     }
-# }
-
-# def show_toolbar(request):
-#         return False
-
-# DEBUG_TOOLBAR_CONFIG = {
-#     'SHOW_TOOLBAR_CALLBACK': show_toolbar,
-# }
 

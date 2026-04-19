@@ -32,16 +32,3 @@ DATABASES = {
     }
 }
 
-# PostgreSQL
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": "auroraiotdb",
-#         "USER": config('DB_USERNAME_PROD'),
-#         "PASSWORD": config('DB_PASSWORD_PROD'),
-#         "HOST": config('DB_HOST_PROD'),
-#         "PORT": config('DB_PORT_PROD'),
-#     }
-# }
-
-

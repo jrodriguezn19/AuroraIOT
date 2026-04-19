@@ -134,11 +134,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
-        # Default permissiong if nothing is specified (Allows allow users unrestricted access).
-        #'rest_framework.permissions.AllowAny',
-        # API Only accessible to registered users.
-        # "rest_framework.permissions.IsAuthenticated",
-        # Read only API Accessible to unauthenticated users. Complete access to authenticated users.
         "rest_framework.permissions.IsAuthenticatedOrReadOnly"
     ],
     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
@@ -147,6 +142,14 @@ REST_FRAMEWORK = {
     "PAGE_SIZE": 100,
     "PAGE_SIZE_QUERY_PARAM": "page_size",
     "MAX_PAGE_SIZE": 1000,
+    "DEFAULT_THROTTLE_CLASSES": [
+        "rest_framework.throttling.AnonRateThrottle",
+        "rest_framework.throttling.UserRateThrottle",
+    ],
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": "60/min",
+        "user": "300/min",
+    },
 }
 
 
@@ -160,8 +163,10 @@ LOGGING = {
             'formatter': 'verbose'
         },
         'file': {
-            'class': 'logging.FileHandler',
+            'class': 'logging.handlers.RotatingFileHandler',
             'filename': 'logs/django-general.log',
+            'maxBytes': 10 * 1024 * 1024,  # 10 MB
+            'backupCount': 5,
             'formatter': 'verbose'
         }
     },
