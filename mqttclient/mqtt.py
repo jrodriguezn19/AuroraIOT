@@ -1,5 +1,4 @@
 import json
-import time
 import logging
 
 import paho.mqtt.client as mqtt
@@ -21,28 +20,13 @@ def on_connect(client, userdata, flags, rc):
         client.bad_connection_flag = True
 
 
-FIRST_RECONNECT_DELAY = 1
-RECONNECT_RATE = 2
-MAX_RECONNECT_COUNT = 12
-MAX_RECONNECT_DELAY = 60
-
-
 def on_disconnect(client, userdata, rc):
     logger.warning(f"MQTT: Disconnected with result code {rc}")
     client.connected_flag = False
-    reconnect_count, reconnect_delay = 0, FIRST_RECONNECT_DELAY
-    while reconnect_count < MAX_RECONNECT_COUNT:
-        logger.info(f"MQTT: Reconnecting in {reconnect_delay} seconds...")
-        time.sleep(reconnect_delay)
-        try:
-            client.reconnect()
-            logger.info("MQTT: Reconnected successfully!")
-            return
-        except Exception as err:
-            logger.error(f"MQTT: {err}. Reconnect failed. Retrying...")
-        reconnect_delay = min(reconnect_delay * RECONNECT_RATE, MAX_RECONNECT_DELAY)
-        reconnect_count += 1
-    logger.error(f"MQTT: Reconnect failed after {MAX_RECONNECT_COUNT} attempts.")
+    # Reconnection is handled automatically by loop_start() via
+    # reconnect_delay_set(). Do not call reconnect() here — doing so
+    # from the callback thread causes competing reconnect storms when
+    # multiple workers share the same client_id.
 
 
 def on_message(mqtt_client, userdata, msg):
@@ -86,15 +70,17 @@ def on_message(mqtt_client, userdata, msg):
         logger.error(f"MQTT: Unexpected error processing message - {err}")
 
 
-client = mqtt.Client(client_id=settings.MQTT_CLIENT_ID)
-if settings.MQTT_ACTIVE:
+def start():
+    client = mqtt.Client(client_id=settings.MQTT_CLIENT_ID)
     client.on_connect = on_connect
     client.on_message = on_message
     client.on_disconnect = on_disconnect
     client.username_pw_set(settings.MQTT_USER, settings.MQTT_PASSWORD)
     client.connected_flag = False
     client.bad_connection_flag = False
-    logger.info(f"MQTT: Connecting to Broker {settings.MQTT_SERVER}, {settings.MQTT_PORT}")
+    # Let Paho handle reconnection automatically with exponential backoff
+    client.reconnect_delay_set(min_delay=1, max_delay=60)
+    logger.info(f"MQTT: Connecting to broker {settings.MQTT_SERVER}:{settings.MQTT_PORT}")
     try:
         client.connect(
             host=settings.MQTT_SERVER,

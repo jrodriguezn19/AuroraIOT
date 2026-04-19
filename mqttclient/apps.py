@@ -1,13 +1,21 @@
+import os
 from django.apps import AppConfig
 from django.conf import settings
+
 
 class MqttclientConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'mqttclient'
 
-    #runn the loop_start only after all django is ready, but if might not be necessary
-    # def ready(self):
-    #     from mqttclient import mqtt      
-    #     if settings.MQTT_ACTIVE:
-    #         mqtt.client.loop_start()
-    #         print("MQTT: Loop started")
+    def ready(self):
+        # Django's dev server (runserver) calls ready() twice: once in the
+        # parent process and once in the auto-reloader child (RUN_MAIN=true).
+        # Only start MQTT in the child so there is exactly one client.
+        # In Gunicorn/production RUN_MAIN is not set and ready() runs once.
+        is_dev_server = os.environ.get('RUN_MAIN') is not None
+        if is_dev_server and os.environ.get('RUN_MAIN') != 'true':
+            return
+
+        if settings.MQTT_ACTIVE:
+            from mqttclient import mqtt
+            mqtt.start()
