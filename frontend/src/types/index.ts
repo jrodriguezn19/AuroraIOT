@@ -17,6 +17,6 @@ export interface DataPoint {
   power_factor: number
 }
 
-export type TimeRange = '1h' | '6h' | '24h' | '7d'
+export type TimeRange = '1h' | '6h' | '24h' | '7d' | '30d' | '6m' | '1y'
 
 export type Metric = 'watts' | 'volts' | 'amps' | 'frequency' | 'power_factor'

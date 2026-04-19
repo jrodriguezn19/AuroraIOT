@@ -30,16 +30,18 @@ const RANGES: { value: TimeRange; label: string }[] = [
   { value: '6h', label: '6H' },
   { value: '24h', label: '24H' },
   { value: '7d', label: '7D' },
+  { value: '30d', label: '30D' },
+  { value: '6m', label: '6M' },
+  { value: '1y', label: '1Y' },
 ]
 
 function formatAxisTime(iso: string, range: TimeRange): string {
   const d = new Date(iso)
-  if (range === '7d') {
-    return (
-      d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) +
-      ' ' +
-      d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })
-    )
+  if (range === '1y' || range === '6m') {
+    return d.toLocaleDateString('en-US', { month: 'short', year: '2-digit' })
+  }
+  if (range === '30d' || range === '7d') {
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
   }
   return d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })
 }
