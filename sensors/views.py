@@ -7,7 +7,7 @@ from .filters import SensorDataFilter
 from .pagination import SensorDataCursorPagination
 
 class SensorViewSet(ReadOnlyModelViewSet):
-    queryset = Sensor.objects.all()
+    queryset = Sensor.objects.all().order_by('id')
     serializer_class = SensorSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter]
     filterset_fields = ['id']
