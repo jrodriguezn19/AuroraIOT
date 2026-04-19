@@ -10,6 +10,10 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['.georgedeveloper.com']
 CSRF_TRUSTED_ORIGINS = ['https://*.georgedeveloper.com']
+CORS_ALLOWED_ORIGINS = config(
+    'CORS_ALLOWED_ORIGINS',
+    cast=lambda v: [s.strip() for s in v.split(',')]
+)
 
 # MQTT Config
 MQTT_SERVER = config('MQTT_SERVER_PROD')
