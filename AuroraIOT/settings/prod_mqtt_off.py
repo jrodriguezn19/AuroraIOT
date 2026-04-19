@@ -8,7 +8,8 @@ logger.info(f"MQTT active status is: {MQTT_ACTIVE}")
 
 DEBUG = False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['.georgedeveloper.com']
+CSRF_TRUSTED_ORIGINS = ['https://*.georgedeveloper.com']
 
 
 # MQTT Config
@@ -44,10 +45,3 @@ DATABASES = {
 # }
 
 
-def show_toolbar(request):
-    return True
-
-
-DEBUG_TOOLBAR_CONFIG = {
-    "SHOW_TOOLBAR_CALLBACK": show_toolbar,
-}
