@@ -16,7 +16,7 @@ def on_connect(client, userdata, flags, rc):
     if rc == 0:
         client.connected_flag = True
         logger.info(f'MQTT: Connected successfully, returned code = {rc}')
-        client.subscribe('auroraiot/energy', qos=1)
+        client.subscribe('auroraiot/#', qos=1)
     else:
         logger.error(f'MQTT: Bad connection, returned code = {rc}')
         client.bad_connection_flag = True
@@ -42,8 +42,7 @@ def on_message(mqtt_client, userdata, msg):
         sensor_id = json_payload["sensor_id"]
         data = json_payload["data"]
 
-        if settings.DEBUG:
-            logger.debug(f'Topic: {msg.topic} Payload: {json_payload}')
+        logger.info(f'MQTT: Message on topic={msg.topic}')
 
         try:
             sensor = Sensor.objects.select_related('type').get(id=sensor_id)
