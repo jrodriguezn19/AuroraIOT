@@ -35,8 +35,8 @@ const RANGES: { value: TimeRange; label: string }[] = [
   { value: '1y', label: '1Y' },
 ]
 
-function formatAxisTime(iso: string, range: TimeRange): string {
-  const d = new Date(iso)
+function formatAxisTick(ts: number, range: TimeRange): string {
+  const d = new Date(ts)
   if (range === '1y' || range === '6m') {
     return d.toLocaleDateString('en-US', { month: 'short', year: '2-digit' })
   }
@@ -46,13 +46,43 @@ function formatAxisTime(iso: string, range: TimeRange): string {
   return d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false })
 }
 
-function formatTooltipTime(iso: string): string {
-  const d = new Date(iso)
+function formatTooltipTime(ts: number): string {
+  const d = new Date(ts)
   return (
     d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) +
     ' ' +
     d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })
   )
+}
+
+function computeTicks(range: TimeRange, data: DataPoint[]): number[] {
+  if (data.length === 0) return []
+  const first = new Date(data[0].time).getTime()
+  const last = new Date(data[data.length - 1].time).getTime()
+  const ticks: number[] = []
+  const d = new Date(first)
+
+  if (range === '1y' || range === '6m') {
+    d.setDate(1); d.setHours(0, 0, 0, 0)
+    while (d.getTime() <= last) { ticks.push(d.getTime()); d.setMonth(d.getMonth() + 1) }
+  } else if (range === '30d') {
+    d.setHours(0, 0, 0, 0)
+    while (d.getTime() <= last) { ticks.push(d.getTime()); d.setDate(d.getDate() + 7) }
+  } else if (range === '7d') {
+    d.setHours(0, 0, 0, 0)
+    while (d.getTime() <= last) { ticks.push(d.getTime()); d.setDate(d.getDate() + 1) }
+  } else if (range === '24h') {
+    d.setMinutes(0, 0, 0); d.setHours(Math.ceil(d.getHours() / 4) * 4 % 24)
+    while (d.getTime() <= last) { ticks.push(d.getTime()); d.setHours(d.getHours() + 4) }
+  } else if (range === '6h') {
+    d.setMinutes(0, 0, 0)
+    while (d.getTime() <= last) { ticks.push(d.getTime()); d.setHours(d.getHours() + 1) }
+  } else {
+    d.setSeconds(0, 0); d.setMinutes(Math.ceil(d.getMinutes() / 15) * 15)
+    while (d.getTime() <= last) { ticks.push(d.getTime()); d.setMinutes(d.getMinutes() + 15) }
+  }
+
+  return ticks
 }
 
 function getValue(point: DataPoint, metric: Metric): number {
@@ -66,7 +96,7 @@ function CustomTooltip({ active, payload, label, metric }: any) {
   const selected = METRICS.find(m => m.value === metric)
   return (
     <div className="chart-tooltip">
-      <div className="chart-tooltip-time">{formatTooltipTime(label)}</div>
+      <div className="chart-tooltip-time">{formatTooltipTime(label as number)}</div>
       <div className="chart-tooltip-value" style={{ color: `var(${selected?.colorVar})` }}>
         {Number(payload[0].value).toFixed(2)} {selected?.label.match(/\((.+)\)/)?.[1]}
       </div>
@@ -77,6 +107,7 @@ function CustomTooltip({ active, payload, label, metric }: any) {
 export function EnergyChart({ history, metric, timeRange, onMetricChange, onRangeChange }: EnergyChartProps) {
   const selected = METRICS.find(m => m.value === metric) ?? METRICS[0]
   const color = `var(${selected.colorVar})`
+  const ticks = computeTicks(timeRange, history)
 
   return (
     <div className="chart-container">
@@ -110,12 +141,15 @@ export function EnergyChart({ history, metric, timeRange, onMetricChange, onRang
           <LineChart data={history} margin={{ top: 8, right: 16, bottom: 0, left: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
             <XAxis
-              dataKey="time"
-              tickFormatter={t => formatAxisTime(t, timeRange)}
+              dataKey={(d: DataPoint) => new Date(d.time).getTime()}
+              type="number"
+              scale="time"
+              domain={['dataMin', 'dataMax']}
+              ticks={ticks}
+              tickFormatter={(t: number) => formatAxisTick(t, timeRange)}
               tick={{ fill: 'var(--text-muted)', fontSize: 12 }}
               tickLine={false}
               axisLine={{ stroke: 'var(--border)' }}
-              interval="preserveStartEnd"
             />
             <YAxis
               tick={{ fill: 'var(--text-muted)', fontSize: 12 }}
