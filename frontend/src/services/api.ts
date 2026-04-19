@@ -20,19 +20,32 @@ export async function fetchLatest(sensorId: number): Promise<DataPoint | null> {
   return data.results[0] ?? null
 }
 
+const CHUNKS_PER_RANGE = 10
+const POINTS_PER_CHUNK = 100 // 10 chunks × 100 = 1000 total points
+
 export async function fetchHistory(
   sensorId: number,
   from: Date,
   to: Date
 ): Promise<DataPoint[]> {
-  const params = new URLSearchParams({
-    page_size: '1000',
-    time__gt: from.toISOString(),
-    time__lt: to.toISOString(),
-  })
-  const data = await get<{ results: DataPoint[] }>(
-    `${BASE}/sensors/${sensorId}/data/?${params}`
+  const totalMs = to.getTime() - from.getTime()
+  const chunkMs = totalMs / CHUNKS_PER_RANGE
+
+  const chunks = await Promise.all(
+    Array.from({ length: CHUNKS_PER_RANGE }, async (_, i) => {
+      const chunkFrom = new Date(from.getTime() + i * chunkMs)
+      const chunkTo = new Date(from.getTime() + (i + 1) * chunkMs)
+      const params = new URLSearchParams({
+        page_size: String(POINTS_PER_CHUNK),
+        time__gt: chunkFrom.toISOString(),
+        time__lt: chunkTo.toISOString(),
+      })
+      const d = await get<{ results: DataPoint[] }>(
+        `${BASE}/sensors/${sensorId}/data/?${params}`
+      )
+      return d.results.slice().reverse()
+    })
   )
-  // API returns newest-first; reverse for chronological chart display
-  return data.results.slice().reverse()
+
+  return chunks.flat()
 }
