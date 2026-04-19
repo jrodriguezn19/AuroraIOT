@@ -14,11 +14,6 @@ class SensorViewSet(ReadOnlyModelViewSet):
     search_fields = ['name', 'brand']
 
 class SensorDataViewSet(ReadOnlyModelViewSet):
-    """
-    Read sensor data for a specific sensor. Ordered by timestamp, newest first.
-    Cursor-based pagination: use `next` / `previous` links in the response.
-    Supports ?time__gt and ?time__lt filters to narrow to a time range.
-    """
     serializer_class = DataPZEM004tSerializer
     pagination_class = SensorDataCursorPagination
     filter_backends = [DjangoFilterBackend]
