@@ -31,7 +31,7 @@ export async function fetchHistory(
   const totalMs = to.getTime() - from.getTime()
   const chunkMs = totalMs / CHUNKS_PER_RANGE
 
-  const chunks = await Promise.all(
+  const results = await Promise.allSettled(
     Array.from({ length: CHUNKS_PER_RANGE }, async (_, i) => {
       const chunkFrom = new Date(from.getTime() + i * chunkMs)
       const chunkTo = new Date(from.getTime() + (i + 1) * chunkMs)
@@ -47,5 +47,7 @@ export async function fetchHistory(
     })
   )
 
-  return chunks.flat()
+  return results
+    .filter((r): r is PromiseFulfilledResult<DataPoint[]> => r.status === 'fulfilled')
+    .flatMap(r => r.value)
 }

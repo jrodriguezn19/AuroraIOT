@@ -81,6 +81,14 @@ body {
   margin: 0 auto;
 }
 
+/* Last updated timestamp */
+
+.last-updated {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
 /* Status dot */
 
 .status-dot {

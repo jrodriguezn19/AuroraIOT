@@ -21,7 +21,7 @@ export default function App() {
       .catch(() => {})
   }, [])
 
-  const { latest, history, loading, error } = useLiveData(sensorId, timeRange)
+  const { latest, history, loading, error, lastUpdated } = useLiveData(sensorId, timeRange)
 
   const activeSensor = sensors.find(s => s.id === sensorId)
 
@@ -36,6 +36,11 @@ export default function App() {
         </div>
         <div className="header-right">
           <SensorSelector sensors={sensors} selectedId={sensorId} onChange={setSensorId} />
+          {lastUpdated && (
+            <span className="last-updated">
+              {lastUpdated.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })}
+            </span>
+          )}
           <div className={`status-dot ${error ? 'error' : loading ? 'loading' : 'live'}`} title={error ?? 'Live'} />
         </div>
       </header>

@@ -22,6 +22,7 @@ export function useLiveData(sensorId: number, timeRange: TimeRange) {
   const [history, setHistory] = useState<DataPoint[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   useEffect(() => {
@@ -43,6 +44,7 @@ export function useLiveData(sensorId: number, timeRange: TimeRange) {
         const data = await fetchLatest(sensorId)
         if (!cancelled) {
           setLatest(data)
+          setLastUpdated(new Date())
           setError(null)
         }
       } catch (e) {
@@ -64,5 +66,5 @@ export function useLiveData(sensorId: number, timeRange: TimeRange) {
     }
   }, [sensorId, timeRange])
 
-  return { latest, history, loading, error }
+  return { latest, history, loading, error, lastUpdated }
 }
