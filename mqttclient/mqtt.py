@@ -9,6 +9,8 @@ from mqttclient.models import Data_Received
 
 logger = logging.getLogger(__name__)
 
+_client = None  # module-level reference prevents GC after start() returns
+
 
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
@@ -71,7 +73,9 @@ def on_message(mqtt_client, userdata, msg):
 
 
 def start():
-    client = mqtt.Client(client_id=settings.MQTT_CLIENT_ID)
+    global _client
+    _client = mqtt.Client(client_id=settings.MQTT_CLIENT_ID)
+    client = _client
     client.on_connect = on_connect
     client.on_message = on_message
     client.on_disconnect = on_disconnect
