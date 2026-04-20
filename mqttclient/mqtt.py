@@ -41,10 +41,8 @@ def on_message(mqtt_client, userdata, msg):
         try:
             json_payload = json.loads(string_payload)
         except ValueError:
-            # Non-JSON diagnostic messages (ping, timestamp, etc.) on non-energy topics are expected
-            if msg.topic != 'auroraiot/energy':
-                return
-            raise
+            # ESP32 publishes diagnostic text (ping, timestamp) on all topics — silently skip
+            return
         sensor_id = json_payload["sensor_id"]
         data = json_payload["data"]
 
